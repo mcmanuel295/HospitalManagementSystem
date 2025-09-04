@@ -1,0 +1,53 @@
+### Challenge: Hospital Management System 🏥
+Create a Spring Boot application that manages a hospital's operations. The system should handle different user roles and their specific functions.
+
+Implement the following features:
+
+* **Doctor Management**:
+    * **Create**, **retrieve**, **update**, and **delete** doctor profiles (name, specialization, contact).
+    * View a list of their assigned patients and their medical history.
+
+* **Pharmacist Management**:
+    * **Manage** the medicine inventory (**add**, **update**, **delete** stock).
+    * **Process** prescriptions submitted by doctors.
+    * Track medicine availability and expiration dates.
+
+* **Receptionist Management**:
+    * **Register** new patients.
+    * **Schedule** and **manage** appointments for patients with doctors.
+    * **Generate** patient bills for consultation and medicine.
+
+* **Patient Records**:
+    * **Store** and **retrieve** patient medical history, including diagnoses, prescriptions, and past visits.
+    * Securely link patient records to their doctors.
+
+* **Medicine Management**:
+    * A comprehensive system to store medicine details (**name**, **price**, **stock quantity**, **expiration date**).
+
+* **Billing and Invoice Management:
+    Generate invoices for patients, detailing consultation fees, medicine costs, and other charges.
+    Process payments and update payment status.
+    Retrieve historical billing records for a patient.
+
+    Appointment Scheduling:
+    A system for patients and receptionists to book appointments with specific doctors.
+    Send reminders and notifications for upcoming appointments.
+    View a doctor's schedule to check for available slots.
+
+    Lab and Diagnostics Services:
+    Manage laboratory tests requested by doctors.
+    Record and retrieve lab results for patients.
+
+    In-Patient and Ward Management:
+    Assign beds to admitted patients.
+    Track patient status and location within the hospital.
+    Manage ward and bed availability.
+
+
+
+Implement the following features:
+* Use **Spring Security** to define and enforce user roles (`DOCTOR`, `PHARMACIST`, `RECEPTIONIST`). A doctor should not be able to update medicine stock, and a pharmacist should not be able to schedule appointments.
+* Implement **data persistence** using **Spring Data JPA** and a relational database.
+* Design a robust database schema that correctly links entities like a `Doctor` to `Patient` records, and a `Pharmacist` to `Medicines`.
+* Implement **transactional integrity** for billing and prescription processing.
+* Use **DTOs** (Data Transfer Objects) to separate the business logic from the data sent over the API, ensuring data security and efficient communication.
