@@ -1,4 +1,6 @@
 package com.mcmanuel.HospitalManagementSystem.service.impl;
 
-public class PharmacistServiceImpl {
+import com.mcmanuel.HospitalManagementSystem.service.intf.PharmacistService;
+
+public class PharmacistServiceImpl implements PharmacistService {
 }

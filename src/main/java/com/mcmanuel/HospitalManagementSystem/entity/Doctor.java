@@ -13,7 +13,7 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 @Entity
-public class Doctor extends User{
+public class Pharmacist extends User{
     @Enumerated(EnumType.STRING)
     private Role role = Role.DOCTOR;
 
