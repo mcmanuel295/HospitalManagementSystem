@@ -5,14 +5,16 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
+@SuperBuilder
 @Entity
 public class Pharmacist extends User{
     @Enumerated(EnumType.STRING)
     private Role role = Role.PHARMACIST;
+
 }

@@ -33,7 +33,24 @@ public abstract class User {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    private String contact;
+
     @Column(name = "fullname")
-    private String fullName = getLastName()+" "+getFirstName();
+    private String fullName ;
+
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+        setFullName();
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+        setFullName();
+    }
+
+    public void setFullName() {
+        this.fullName =getLastName()+" "+getFirstName();
+    }
 }
 

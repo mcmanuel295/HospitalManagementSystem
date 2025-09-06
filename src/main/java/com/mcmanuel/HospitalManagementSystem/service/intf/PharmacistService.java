@@ -2,13 +2,11 @@ package com.mcmanuel.HospitalManagementSystem.service.intf;
 
 
 import com.mcmanuel.HospitalManagementSystem.entity.Pharmacist;
+import com.mcmanuel.HospitalManagementSystem.service.request.PharmacistRequest;
 
-import java.util.UUID;
 
-public interface PharmacistService{
+public interface PharmacistService extends UserService<Pharmacist>{
 
-    Pharmacist addPharmacist(Pharmacist pharmacist);
-    Pharmacist getPharmacist(UUID pharmacistId);
-    Pharmacist updatePharmacist(Pharmacist updatedPharmacist);
-    void deletePharmacist(UUID pharmacistId);
+    Pharmacist addPharmacist(PharmacistRequest pharmacistRequest);
+    // prescribe drugs to patients
 }
