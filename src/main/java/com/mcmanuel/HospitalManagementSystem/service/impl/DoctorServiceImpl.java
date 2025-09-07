@@ -8,10 +8,8 @@ import com.mcmanuel.HospitalManagementSystem.service.request.AddDoctorRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -22,10 +20,9 @@ public class DoctorServiceImpl implements DoctorService{
 
     @Override
     public Doctor addDoctor(AddDoctorRequest doctorRequest) {
+
         Doctor doctor = Doctor
                 .builder()
-                .firstName(doctorRequest.getFirstName())
-                .lastName(doctorRequest.getLastName())
                 .email(doctorRequest.getEmail())
 
                 .password(
@@ -35,13 +32,15 @@ public class DoctorServiceImpl implements DoctorService{
                 .specialization(doctorRequest.getSpecialization())
                 .contact(doctorRequest.getContact())
                 .build();
+        doctor.setFirstName(doctorRequest.getFirstName());
+        doctor.setLastName(doctorRequest.getLastName());
 
         return doctorRepo.save(doctor);
     }
 
 
     @Override
-    public Doctor getUserById(UUID doctorId) throws NoSuchElementException {
+    public Doctor getUserById(Integer doctorId) throws NoSuchElementException {
         return doctorRepo.findById(doctorId).orElseThrow();
     }
 
@@ -51,26 +50,26 @@ public class DoctorServiceImpl implements DoctorService{
     }
 
     @Override
-    public Doctor updateUser(UUID doctorId, Doctor updatedDoctor) throws NoSuchElementException {
+    public Doctor updateUser(Integer doctorId, Doctor updatedDoctor) throws NoSuchElementException {
         doctorRepo.findById(doctorId).orElseThrow();
         updatedDoctor.setUserId(doctorId);
         return updatedDoctor;
     }
 
     @Override
-    public void deleteUser(UUID userId) throws NoSuchElementException {
+    public void deleteUser(Integer userId) throws NoSuchElementException {
         Doctor doctor = doctorRepo.findById(userId).orElseThrow();
         doctorRepo.delete(doctor);
 
     }
 
     @Override
-    public Doctor getAvailableDoctors(String specialty) {
+    public List<Doctor> getAvailableDoctors(String specialty) {
         return doctorRepo.findAvailableDoctors(specialty);
     }
 
     @Override
-    public List<Patient> assignedPatients(UUID doctorId) throws NoSuchElementException {
+    public List<Patient> assignedPatients(Integer doctorId) throws NoSuchElementException {
         Doctor doctor = doctorRepo.findById(doctorId).orElseThrow();
         doctorRepo.deleteById(doctor.getUserId());
         return List.of();

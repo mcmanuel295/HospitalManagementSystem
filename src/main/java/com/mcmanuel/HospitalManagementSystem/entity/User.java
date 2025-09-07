@@ -5,8 +5,6 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-import java.util.UUID;
-
 @Getter
 @Setter
 @AllArgsConstructor
@@ -15,8 +13,8 @@ import java.util.UUID;
 @MappedSuperclass
 public abstract class User {
     @Id
-    @Column(columnDefinition = "Binary(16)")
-    private UUID userId = UUID.randomUUID();
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer userId ;
 
     @Column(nullable = false)
     private String firstName;
@@ -38,7 +36,6 @@ public abstract class User {
     @Column(name = "fullname")
     private String fullName ;
 
-
     public void setFirstName(String firstName) {
         this.firstName = firstName;
         setFullName();
@@ -49,8 +46,10 @@ public abstract class User {
         setFullName();
     }
 
+
     public void setFullName() {
-        this.fullName =getLastName()+" "+getFirstName();
+        this.fullName =this.getLastName()+" "+getFirstName();
     }
+
 }
 

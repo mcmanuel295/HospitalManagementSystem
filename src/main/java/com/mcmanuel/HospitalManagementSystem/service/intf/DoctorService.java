@@ -11,6 +11,6 @@ import java.util.UUID;
 public interface DoctorService extends UserService<Doctor>{
 
     Doctor addDoctor(AddDoctorRequest addDoctorRequest);
-    Doctor getAvailableDoctors(String specialty);
-    List<Patient> assignedPatients(UUID doctorsId) throws Exception;
+    List<Doctor> getAvailableDoctors(String specialty);
+    List<Patient> assignedPatients(Integer doctorsId) throws Exception;
 }

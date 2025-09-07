@@ -37,7 +37,7 @@ public class PharmacistServiceImpl implements PharmacistService {
     }
 
     @Override
-    public Pharmacist getUserById(UUID pharmacistId) throws NoSuchElementException {
+    public Pharmacist getUserById(Integer pharmacistId) throws NoSuchElementException {
         return pharmacistRepo.findById(pharmacistId).orElseThrow();
     }
 
@@ -47,14 +47,14 @@ public class PharmacistServiceImpl implements PharmacistService {
     }
 
     @Override
-        public Pharmacist updateUser(UUID pharmacistId, Pharmacist updatedPharmacist) throws NoSuchElementException {
+        public Pharmacist updateUser(Integer pharmacistId, Pharmacist updatedPharmacist) throws NoSuchElementException {
         pharmacistRepo.findById(pharmacistId).orElseThrow();
         updatedPharmacist.setUserId(pharmacistId);
         return updatedPharmacist;
     }
 
     @Override
-    public void deleteUser(UUID pharmacistId) throws NoSuchElementException {
+    public void deleteUser(Integer pharmacistId) throws NoSuchElementException {
         Pharmacist pharmacist = pharmacistRepo.findById(pharmacistId).orElseThrow();
         pharmacistRepo.delete(pharmacist);
     }

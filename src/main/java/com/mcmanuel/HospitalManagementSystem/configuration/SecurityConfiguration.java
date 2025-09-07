@@ -24,7 +24,7 @@ public class SecurityConfiguration {
     public SecurityFilterChain securitFilterChain(HttpSecurity http) throws Exception {
 
         return http
-                .csrf(Customizer.withDefaults())
+                .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(
                         request -> request
                                 .requestMatchers("/admin/**").authenticated()
