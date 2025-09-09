@@ -1,6 +1,7 @@
 package com.mcmanuel.HospitalManagementSystem.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
 import lombok.*;
 
 import java.util.Set;
@@ -16,11 +17,14 @@ public class Medicine {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String medicineId;
 
-    @ElementCollection
+    @Column(name = "medicine_name",unique = true)
     private String medicineName;
 
+    @Min(value = 0)
+    private int quantity;
+
+
     @ElementCollection
-    private Set<String> company;
     private Set<String> distributor;
 
 

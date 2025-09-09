@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
 import java.util.NoSuchElementException;
-import java.util.UUID;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -17,8 +17,13 @@ public class MedicineServiceImpl implements MedicineService {
 
     @Override
     public Medicine addMedicine(@Validated Medicine medicine) {
+        if (medicineRepo.findByMedicineName(medicine.getMedicineName()).isEmpty()) {
+           return medicineRepo.save(medicine);
+        }
+        medicine.setQuantity( medicine.getQuantity()+1);
         return medicineRepo.save(medicine);
     }
+
 
     @Override
     public Medicine getMedicine(String medicineId)throws NoSuchElementException {
@@ -37,5 +42,30 @@ public class MedicineServiceImpl implements MedicineService {
     public void deleteMedicine(String medicineId)throws NoSuchElementException {
         Medicine medicine =  medicineRepo.findById(medicineId).orElseThrow();
         medicineRepo.delete(medicine);
+    }
+
+    @Override
+    public String getMedicineName(String medicineId) {
+        return medicineRepo.findById(medicineId)
+                .map(Medicine::getMedicineName)
+                .orElseThrow();
+    }
+
+    @Override
+    public Medicine removeMedicine(String medicineId) {
+        Medicine medicine = medicineRepo.findById(medicineId).orElseThrow(()->throw new Exception()
+
+        return medicineRepo.save(medicine);
+    }
+
+
+    @Override
+    public Set<String> getDistributorName(String medicineId) {
+        return Set.of();
+    }
+
+    @Override
+    public Set<String> getDistributorAllName() {
+        return Set.of();
     }
 }

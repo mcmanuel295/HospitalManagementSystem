@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Set;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/medicines")
@@ -43,4 +45,18 @@ public class MedicineController {
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+
+    @GetMapping("/")
+    public ResponseEntity<String> getMedicineName(@PathVariable String medicineId){
+        String name = medicineService.getMedicine(medicineId);
+        if (name == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(medicine,HttpStatus.OK);
+    }
+
+    Medicine removeMedicine(String medicineId);
+    Set<String> getDistributorName(String medicineId);
+    Set<String> getDistributorAllName();
 }

@@ -9,6 +9,7 @@ import java.util.Set;
 @Getter
 @Setter
 @SuperBuilder
+@NoArgsConstructor
 @Entity
 public class Doctor extends User{
     @Enumerated(EnumType.STRING)
@@ -19,9 +20,6 @@ public class Doctor extends User{
     @ElementCollection(fetch = FetchType.LAZY)
     private Set<String> specialization;
     private boolean available;
-
-    public Doctor(){
-    }
 
     @Override
     public String toString() {
