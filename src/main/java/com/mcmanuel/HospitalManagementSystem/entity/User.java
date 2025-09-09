@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -13,8 +15,8 @@ import lombok.experimental.SuperBuilder;
 @MappedSuperclass
 public abstract class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer userId ;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private String userId;
 
     @Column(nullable = false)
     private String firstName;
@@ -33,7 +35,7 @@ public abstract class User {
 
     private String contact;
 
-    @Column(name = "fullname")
+    @Column(name = "full_name")
     private String fullName ;
 
     public void setFirstName(String firstName) {
@@ -45,7 +47,6 @@ public abstract class User {
         this.lastName = lastName;
         setFullName();
     }
-
 
     public void setFullName() {
         this.fullName =this.getLastName()+" "+getFirstName();

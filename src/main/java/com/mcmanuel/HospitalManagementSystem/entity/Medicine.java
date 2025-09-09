@@ -1,10 +1,9 @@
 package com.mcmanuel.HospitalManagementSystem.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.UUID;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -14,7 +13,15 @@ import java.util.UUID;
 @Entity
 public class Medicine {
     @Id
-    private UUID medicineId = UUID.randomUUID();
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private String medicineId;
 
-    private String name;
+    @ElementCollection
+    private String medicineName;
+
+    @ElementCollection
+    private Set<String> company;
+    private Set<String> distributor;
+
+
 }

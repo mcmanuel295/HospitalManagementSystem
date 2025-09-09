@@ -5,11 +5,10 @@ import com.mcmanuel.HospitalManagementSystem.service.intf.ReceptionistService;
 
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.UUID;
 
 public class ReceptionistServiceImpl implements ReceptionistService {
     @Override
-    public Receptionist getUserById(Integer userId) throws NoSuchElementException {
+    public Receptionist getUserById(String userId) throws NoSuchElementException {
         return null;
     }
 
@@ -19,12 +18,12 @@ public class ReceptionistServiceImpl implements ReceptionistService {
     }
 
     @Override
-    public Receptionist updateUser(Integer userUd, Receptionist updatedUser) throws NoSuchElementException {
+    public Receptionist updateUser(String userUd, Receptionist updatedUser) throws NoSuchElementException {
         return null;
     }
 
     @Override
-    public void deleteUser(Integer userId) throws NoSuchElementException {
+    public void deleteUser(String userId) throws NoSuchElementException {
 
     }
 }

@@ -3,14 +3,13 @@ package com.mcmanuel.HospitalManagementSystem.service.intf;
 
 import com.mcmanuel.HospitalManagementSystem.entity.Doctor;
 import com.mcmanuel.HospitalManagementSystem.entity.Patient;
-import com.mcmanuel.HospitalManagementSystem.service.request.AddDoctorRequest;
-
+import com.mcmanuel.HospitalManagementSystem.service.request.DoctorRequest;
 import java.util.List;
-import java.util.UUID;
 
 public interface DoctorService extends UserService<Doctor>{
 
-    Doctor addDoctor(AddDoctorRequest addDoctorRequest);
+    Doctor addDoctor(DoctorRequest addDoctorRequest);
     List<Doctor> getAvailableDoctors(String specialty);
-    List<Patient> assignedPatients(Integer doctorsId) throws Exception;
+    List<Patient> assignedPatients(String doctorsId) throws Exception;
+    String updateAvailability(String doctorId);
 }

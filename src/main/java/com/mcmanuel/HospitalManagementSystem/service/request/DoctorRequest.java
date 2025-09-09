@@ -2,15 +2,15 @@ package com.mcmanuel.HospitalManagementSystem.service.request;
 
 import lombok.Data;
 
-import java.util.List;
+import java.util.Set;
 
 @Data
-public class AddDoctorRequest {
+public class DoctorRequest {
 
     private String firstName;
     private String lastName;
     private String email;
     private String password;
-    private List<String> specialization;
+    private Set<String> specialization;
     private String contact;
 }

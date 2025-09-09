@@ -9,7 +9,7 @@ import java.util.UUID;
 
 public class PatientServiceImpl implements PatientService {
     @Override
-    public Patient getUserById(Integer userId) throws NoSuchElementException {
+    public Patient getUserById(String userId) throws NoSuchElementException {
         return null;
     }
 
@@ -19,12 +19,12 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    public Patient updateUser(Integer userUd, Patient updatedUser) throws NoSuchElementException {
+    public Patient updateUser(String userUd, Patient updatedUser) throws NoSuchElementException {
         return null;
     }
 
     @Override
-    public void deleteUser(Integer userId) throws NoSuchElementException {
+    public void deleteUser(String userId) throws NoSuchElementException {
 
     }
 }

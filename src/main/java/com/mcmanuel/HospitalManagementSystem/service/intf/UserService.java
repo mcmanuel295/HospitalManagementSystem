@@ -5,8 +5,8 @@ import java.util.NoSuchElementException;
 
 public interface UserService <T>{
 
-    T getUserById(Integer userId) throws NoSuchElementException;
+    T getUserById(String userId) throws NoSuchElementException;
     List<T> getAllUser();
-    T updateUser(Integer userUd,T updatedUser) throws NoSuchElementException;
-    void deleteUser(Integer userId) throws NoSuchElementException;
+    T updateUser(String userUd,T updatedUser) throws NoSuchElementException;
+    void deleteUser(String userId) throws NoSuchElementException;
 }

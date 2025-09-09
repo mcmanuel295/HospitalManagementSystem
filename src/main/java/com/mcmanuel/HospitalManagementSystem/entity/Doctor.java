@@ -4,12 +4,10 @@ import com.mcmanuel.HospitalManagementSystem.pojo.Role;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
 @SuperBuilder
 @Entity
 public class Doctor extends User{
@@ -18,9 +16,12 @@ public class Doctor extends User{
 
     @Column(nullable = false)
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    private List<String> specialization;
+    @ElementCollection(fetch = FetchType.LAZY)
+    private Set<String> specialization;
     private boolean available;
+
+    public Doctor(){
+    }
 
     @Override
     public String toString() {

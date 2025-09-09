@@ -1,6 +1,5 @@
 package com.mcmanuel.HospitalManagementSystem.service.impl;
 
-import com.mcmanuel.HospitalManagementSystem.entity.Doctor;
 import com.mcmanuel.HospitalManagementSystem.entity.Pharmacist;
 import com.mcmanuel.HospitalManagementSystem.service.intf.PharmacistService;
 import com.mcmanuel.HospitalManagementSystem.service.repository.PharmacistRepository;
@@ -11,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -37,7 +35,7 @@ public class PharmacistServiceImpl implements PharmacistService {
     }
 
     @Override
-    public Pharmacist getUserById(Integer pharmacistId) throws NoSuchElementException {
+    public Pharmacist getUserById(String pharmacistId) throws NoSuchElementException {
         return pharmacistRepo.findById(pharmacistId).orElseThrow();
     }
 
@@ -47,14 +45,14 @@ public class PharmacistServiceImpl implements PharmacistService {
     }
 
     @Override
-        public Pharmacist updateUser(Integer pharmacistId, Pharmacist updatedPharmacist) throws NoSuchElementException {
+        public Pharmacist updateUser(String pharmacistId, Pharmacist updatedPharmacist) throws NoSuchElementException {
         pharmacistRepo.findById(pharmacistId).orElseThrow();
         updatedPharmacist.setUserId(pharmacistId);
         return updatedPharmacist;
     }
 
     @Override
-    public void deleteUser(Integer pharmacistId) throws NoSuchElementException {
+    public void deleteUser(String pharmacistId) throws NoSuchElementException {
         Pharmacist pharmacist = pharmacistRepo.findById(pharmacistId).orElseThrow();
         pharmacistRepo.delete(pharmacist);
     }
