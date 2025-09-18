@@ -7,8 +7,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
+import javax.naming.LimitExceededException;
 import java.util.NoSuchElementException;
 import java.util.Set;
+import java.util.function.Function;
 
 @Service
 @RequiredArgsConstructor
@@ -52,20 +54,27 @@ public class MedicineServiceImpl implements MedicineService {
     }
 
     @Override
-    public Medicine removeMedicine(String medicineId) {
-        Medicine medicine = medicineRepo.findById(medicineId).orElseThrow(()->throw new Exception()
-
+    public Medicine removeMedicine(String medicineId) throws LimitExceededException,NoSuchElementException {
+        Medicine medicine = medicineRepo.findById(medicineId).orElseThrow();
+        if(medicine.getQuantity()==0){
+            throw new LimitExceededException("No quantity available");
+        }
+        medicine.setQuantity( medicine.getQuantity()-1);
         return medicineRepo.save(medicine);
     }
 
 
     @Override
-    public Set<String> getDistributorName(String medicineId) {
-        return Set.of();
+    public Set<String> getDistributor(String medicineId) {
+
+        Medicine medicine = medicineRepo.findById(medicineId).orElseThrow();
+        medicineRepo.findByDistributors(medicineId)git status;
+
+        return
     }
 
     @Override
-    public Set<String> getDistributorAllName() {
+    public Set<String> getDistributorAll() {
         return Set.of();
     }
 }

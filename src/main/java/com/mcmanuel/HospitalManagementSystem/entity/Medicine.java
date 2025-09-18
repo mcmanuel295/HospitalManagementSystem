@@ -23,7 +23,6 @@ public class Medicine {
     @Min(value = 0)
     private int quantity;
 
-
     @ElementCollection
     private Set<String> distributor;
 

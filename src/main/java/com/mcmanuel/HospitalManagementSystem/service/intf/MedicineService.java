@@ -1,6 +1,8 @@
 package com.mcmanuel.HospitalManagementSystem.service.intf;
 
 import com.mcmanuel.HospitalManagementSystem.entity.Medicine;
+
+import javax.naming.LimitExceededException;
 import java.util.Set;
 
 
@@ -11,7 +13,7 @@ public interface MedicineService {
     Medicine updateMedicine(String medicineId,Medicine updatedMedicine);
     void deleteMedicine(String medicineId);
     String getMedicineName(String medicineId);
-    Medicine removeMedicine(String medicineId);
-    Set<String> getDistributorName(String medicineId);
-    Set<String> getDistributorAllName();
+    Medicine removeMedicine(String medicineId) throws LimitExceededException;
+    Set<String> getDistributor(String medicineId);
+    Set<String> getDistributorAll();
 }
