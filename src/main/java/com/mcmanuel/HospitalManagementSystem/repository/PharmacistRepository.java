@@ -1,4 +1,4 @@
-package com.mcmanuel.HospitalManagementSystem.service.repository;
+package com.mcmanuel.HospitalManagementSystem.repository;
 
 import com.mcmanuel.HospitalManagementSystem.entity.Pharmacist;
 import org.springframework.data.jpa.repository.JpaRepository;

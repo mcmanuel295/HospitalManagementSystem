@@ -3,11 +3,10 @@ package com.mcmanuel.HospitalManagementSystem.controller;
 import com.mcmanuel.HospitalManagementSystem.entity.Doctor;
 import com.mcmanuel.HospitalManagementSystem.entity.Patient;
 import com.mcmanuel.HospitalManagementSystem.service.intf.DoctorService;
-import com.mcmanuel.HospitalManagementSystem.service.request.DoctorRequest;
+import com.mcmanuel.HospitalManagementSystem.request.DoctorRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

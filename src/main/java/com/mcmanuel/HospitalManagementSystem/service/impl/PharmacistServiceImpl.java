@@ -2,8 +2,8 @@ package com.mcmanuel.HospitalManagementSystem.service.impl;
 
 import com.mcmanuel.HospitalManagementSystem.entity.Pharmacist;
 import com.mcmanuel.HospitalManagementSystem.service.intf.PharmacistService;
-import com.mcmanuel.HospitalManagementSystem.service.repository.PharmacistRepository;
-import com.mcmanuel.HospitalManagementSystem.service.request.PharmacistRequest;
+import com.mcmanuel.HospitalManagementSystem.repository.PharmacistRepository;
+import com.mcmanuel.HospitalManagementSystem.request.PharmacistRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

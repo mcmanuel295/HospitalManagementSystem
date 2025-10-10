@@ -1,4 +1,4 @@
-package com.mcmanuel.HospitalManagementSystem.service.request;
+package com.mcmanuel.HospitalManagementSystem.request;
 
 import lombok.Data;
 

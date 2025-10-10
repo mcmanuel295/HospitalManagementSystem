@@ -2,15 +2,15 @@ package com.mcmanuel.HospitalManagementSystem.service.impl;
 
 import com.mcmanuel.HospitalManagementSystem.entity.Medicine;
 import com.mcmanuel.HospitalManagementSystem.service.intf.MedicineService;
-import com.mcmanuel.HospitalManagementSystem.service.repository.MedicineRepository;
+import com.mcmanuel.HospitalManagementSystem.repository.MedicineRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
 import javax.naming.LimitExceededException;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.Set;
-import java.util.function.Function;
 
 @Service
 @RequiredArgsConstructor
@@ -68,13 +68,13 @@ public class MedicineServiceImpl implements MedicineService {
     public Set<String> getDistributor(String medicineId) {
 
         Medicine medicine = medicineRepo.findById(medicineId).orElseThrow();
-        medicineRepo.findByDistributors(medicineId)git status;
 
-        return
+        Optional<Set<String>> distributor =medicineRepo.findByDistributors(medicine.getMedicineId());
+        return distributor.orElseThrow();
     }
 
     @Override
     public Set<String> getDistributorAll() {
-        return Set.of();
+        return medicineRepo.findAllDistributors();
     }
 }

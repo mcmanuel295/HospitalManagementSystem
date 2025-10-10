@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import java.util.List;
 
 
 @Getter
@@ -27,11 +28,18 @@ public abstract class User {
     @Column(unique = true)
     private String email;
 
-    @Column(unique = true)
+    @Column(unique = true,nullable = false)
     private String password;
 
+
+    @ElementCollection(fetch = FetchType.LAZY)
+    @CollectionTable(
+            name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id")
+    )
     @Enumerated(EnumType.STRING)
-    private Role role;
+    @Column(name = "role_name", length = 50)
+    private List<Role> roles;
 
     private String contact;
 

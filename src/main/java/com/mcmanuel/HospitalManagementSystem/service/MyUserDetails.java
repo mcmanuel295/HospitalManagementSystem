@@ -5,9 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import java.util.Collection;
-import java.util.Collections;
 
 @RequiredArgsConstructor
 public class MyUserDetails implements UserDetails {
@@ -15,7 +13,9 @@ public class MyUserDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singleton(new SimpleGrantedAuthority("ROLE_"+user.getRole().name()));
+        return user.getRoles().stream()
+                .map(role ->new SimpleGrantedAuthority("ROLE_"+role.name()))
+                .toList();
     }
 
     @Override
