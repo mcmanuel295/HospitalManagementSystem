@@ -38,6 +38,15 @@ public class DoctorController {
         return new ResponseEntity<>(doctor,HttpStatus.OK);
     }
 
+    @GetMapping("/{email}/email")
+    public ResponseEntity<Doctor> getDoctorByEmail(@PathVariable String email) throws NoSuchElementException {
+        var doctor = doctorService.getUserByEmail(email);
+        if (doctor == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(doctor,HttpStatus.OK);
+    }
+
     @GetMapping("/available/{specialty}")
     public ResponseEntity<List<Doctor>> getAvailableDoctors(@PathVariable String specialty) throws NoSuchElementException {
         var doctor = doctorService.getAvailableDoctors(specialty);

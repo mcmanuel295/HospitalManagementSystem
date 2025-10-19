@@ -40,6 +40,11 @@ public class PharmacistServiceImpl implements PharmacistService {
     }
 
     @Override
+    public Pharmacist getUserByEmail(String email) throws NoSuchElementException {
+        return pharmacistRepo.getByEmail(email);
+    }
+
+    @Override
     public List<Pharmacist> getAllUser() {
         return pharmacistRepo.findAll();
     }

@@ -19,6 +19,7 @@ public class Doctor extends User{
     private Set<String> specialization;
     private boolean available;
 
+
     @Override
     public String toString() {
         return "Doctor{" +

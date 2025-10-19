@@ -16,6 +16,11 @@ public class ReceptionistServiceImpl implements ReceptionistService {
     }
 
     @Override
+    public Receptionist getUserByEmail(String email) throws NoSuchElementException {
+        return null;
+    }
+
+    @Override
     public List<Receptionist> getAllUser() {
         return List.of();
     }

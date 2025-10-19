@@ -9,8 +9,11 @@ import com.mcmanuel.HospitalManagementSystem.request.DoctorRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.HashSet;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -28,14 +31,16 @@ public class DoctorServiceImpl implements DoctorService{
                 .password(
                         passwordEncoder.encode(doctorRequest.getPassword())
                 )
-
-                .roles(List.of(Role.DOCTOR))
+                .roles(new HashSet<>())
                 .specialization(doctorRequest.getSpecialization())
                 .contact(doctorRequest.getContact())
+                .department(Doctor.class.getSimpleName())
                 .build();
         doctor.setFirstName(doctorRequest.getFirstName());
         doctor.setLastName(doctorRequest.getLastName());
-      //  doctor.getRoles().add(Role.DOCTOR);
+
+        doctor.getRoles().add(Role.DOCTOR);
+        System.out.println("doctor roles "+doctor.getRoles());
 
         return doctorRepo.save(doctor);
     }
@@ -44,6 +49,11 @@ public class DoctorServiceImpl implements DoctorService{
     @Override
     public Doctor getUserById(String doctorId) throws NoSuchElementException {
         return doctorRepo.findById(doctorId).orElseThrow();
+    }
+
+    @Override
+    public Doctor getUserByEmail(String email) throws NoSuchElementException {
+        return doctorRepo.findByEmail(email);
     }
 
     @Override

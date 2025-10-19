@@ -20,41 +20,44 @@ public class AdminServiceImpl implements AdminService {
 
 
     @Override
-    public String addAdmin(String adminId) throws UsernameNotFoundException {
-        List<String> user = adminRepo.findByUserId(adminId);
-        if (user.isEmpty()) {
+    public String addAdmin(String userId) throws UsernameNotFoundException {
+
+        Optional<String> optionalDepartment= adminRepo.findByDepartment(userId);
+        if (optionalDepartment.isEmpty()) {
             throw new UsernameNotFoundException("Invalid user");
         }
-        System.out.println("String returned from the database is "+user);
 
-        String name = user.stream().filter(role -> !role.equals(Role.ADMIN.name())).toString();
+       String name  =optionalDepartment.get().toLowerCase();
+
         switch (name){
             case "doctor" :{
-                Doctor doctor= doctorService.getUserById(adminId);
+                Doctor doctor= doctorService.getUserById(userId);
                 doctor.getRoles().add(Role.ADMIN);
-                doctorService.updateUser(adminId,doctor);
+                doctorService.updateUser(doctor.getUserId(),doctor);
                 Admin admin = Admin.builder()
-                        .adminId(adminId)
+                        .adminId(doctor.getUserId())
                         .build();
                 adminRepo.save(admin);
+                break;
             }
 
             case "pharmacist":{
-                Pharmacist pharmacist= pharmacistService.getUserById(adminId);
+                Pharmacist pharmacist= pharmacistService.getUserById(userId);
                 pharmacist.getRoles().add(Role.ADMIN);
-                pharmacistService.updateUser(adminId,pharmacist);
+                pharmacistService.updateUser(pharmacist.getUserId(),pharmacist);
                 Admin admin = Admin.builder()
-                        .adminId(adminId)
+                        .adminId(pharmacist.getUserId())
                         .build();
                 adminRepo.save(admin);
+                break;
             }
 
-            case "reception":{
-                Receptionist receptionist= receptionistService.getUserById(adminId);
+            case "receptionist":{
+                Receptionist receptionist= receptionistService.getUserById(userId);
                 receptionist.getRoles().add(Role.ADMIN);
-                receptionistService.updateUser(adminId,receptionist);
+                receptionistService.updateUser(receptionist.getUserId(),receptionist);
                 Admin admin = Admin.builder()
-                        .adminId(adminId)
+                        .adminId(receptionist.getUserId())
                         .build();
                 adminRepo.save(admin);
             }
@@ -64,12 +67,13 @@ public class AdminServiceImpl implements AdminService {
 
 
     public String removeAdmin(String adminId) {
-        List<String> user = adminRepo.findByUserId(adminId);
-        if (user.isEmpty()) {
-            throw new UsernameNotFoundException("Invalid user");
+        Optional<String> optionalDepartment= adminRepo.findByDepartment(adminId);
+        if (optionalDepartment.isEmpty() || adminRepo.findById(adminId).isEmpty()) {
+            throw new UsernameNotFoundException("Invalid user or admin");
         }
 
-        String name = user.getClass().getName().toLowerCase(Locale.ROOT);
+        String name  =optionalDepartment.get().toLowerCase();
+
         switch (name){
             case "doctor" :{
                 Doctor doctor= doctorService.getUserById(adminId);
@@ -93,18 +97,24 @@ public class AdminServiceImpl implements AdminService {
     }
 
 
-    public String getWorkerById(String userId) throws UsernameNotFoundException {
-        List<String> user = adminRepo.findByUserId(userId);
+    public User getWorkerById(String userId) throws UsernameNotFoundException {
+        Optional<String> department = adminRepo.findByDepartment(userId);
 
-        if(user.isEmpty()){
+        if(department.isEmpty()){
             throw new UsernameNotFoundException("User Not Found");
         }
-        return "user";
+
+        return switch (department.get().toLowerCase()) {
+            case "doctor" -> doctorService.getUserById(userId);
+            case "receptionist" -> receptionistService.getUserById(userId);
+            case "pharmacist" -> pharmacistService.getUserById(userId);
+            default -> throw new UsernameNotFoundException("User not found");
+        };
 
     }
 
     public Patient getPatientsByPatientId(String userId) throws NoSuchElementException {
-        adminRepo.findByUserId(userId);
+        adminRepo.findByEmail(userId);
         return null;
 
     }

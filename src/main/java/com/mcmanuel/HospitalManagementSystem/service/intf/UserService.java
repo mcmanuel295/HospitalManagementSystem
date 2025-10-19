@@ -6,6 +6,7 @@ import java.util.NoSuchElementException;
 public interface UserService <T>{
 
     T getUserById(String userId) throws NoSuchElementException;
+    T getUserByEmail(String email) throws NoSuchElementException;
     List<T> getAllUser();
     T updateUser(String userUd,T updatedUser) throws NoSuchElementException;
     void deleteUser(String userId) throws NoSuchElementException;

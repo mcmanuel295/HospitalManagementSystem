@@ -1,11 +1,14 @@
 package com.mcmanuel.HospitalManagementSystem.entity;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.mcmanuel.HospitalManagementSystem.pojo.Role;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Getter
@@ -13,7 +16,8 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
-@MappedSuperclass
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class User {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -28,6 +32,7 @@ public abstract class User {
     @Column(unique = true)
     private String email;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Column(unique = true,nullable = false)
     private String password;
 
@@ -35,11 +40,14 @@ public abstract class User {
     @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(
             name = "user_roles",
-            joinColumns = @JoinColumn(name = "user_id")
+            joinColumns = @JoinColumn(name = "userId", referencedColumnName = "userId")
     )
     @Enumerated(EnumType.STRING)
     @Column(name = "role_name", length = 50)
-    private List<Role> roles;
+    private Set<Role> roles =new HashSet<>();
+
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private String department;
 
     private String contact;
 

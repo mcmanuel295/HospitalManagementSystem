@@ -14,6 +14,11 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
+    public Patient getUserByEmail(String email) throws NoSuchElementException {
+        return null;
+    }
+
+    @Override
     public List<Patient> getAllUser() {
         return List.of();
     }
