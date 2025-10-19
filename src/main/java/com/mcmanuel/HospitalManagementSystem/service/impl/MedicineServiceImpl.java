@@ -8,9 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
 import javax.naming.LimitExceededException;
-import java.util.NoSuchElementException;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -19,17 +18,26 @@ public class MedicineServiceImpl implements MedicineService {
 
     @Override
     public Medicine addMedicine(@Validated Medicine medicine) {
-        if (medicineRepo.findByMedicineName(medicine.getMedicineName()).isEmpty()) {
+        Optional<Medicine> savedMedicine = medicineRepo.findByMedicineName(medicine.getMedicineName());
+        if (savedMedicine.isEmpty()) {
            return medicineRepo.save(medicine);
         }
-        medicine.setQuantity( medicine.getQuantity()+1);
-        return medicineRepo.save(medicine);
+
+        savedMedicine.get().setQuantity( medicine.getQuantity()+1);
+        savedMedicine.get().getDistributor().addAll(medicine.getDistributor());
+
+        return medicineRepo.save(savedMedicine.get());
     }
 
 
     @Override
     public Medicine getMedicine(String medicineId)throws NoSuchElementException {
         return medicineRepo.findById(medicineId).orElseThrow();
+    }
+
+    @Override
+    public List<Medicine> getAllMedicines() {
+        return medicineRepo.findAll();
     }
 
     @Override
@@ -66,11 +74,8 @@ public class MedicineServiceImpl implements MedicineService {
 
     @Override
     public Set<String> getDistributor(String medicineId) {
-
         Medicine medicine = medicineRepo.findById(medicineId).orElseThrow();
-
-        Optional<Set<String>> distributor =medicineRepo.findByDistributors(medicine.getMedicineId());
-        return distributor.orElseThrow();
+        return medicine.getDistributor();
     }
 
     @Override

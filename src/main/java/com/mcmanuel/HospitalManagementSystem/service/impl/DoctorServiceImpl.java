@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import java.util.HashSet;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -40,7 +39,6 @@ public class DoctorServiceImpl implements DoctorService{
         doctor.setLastName(doctorRequest.getLastName());
 
         doctor.getRoles().add(Role.DOCTOR);
-        System.out.println("doctor roles "+doctor.getRoles());
 
         return doctorRepo.save(doctor);
     }

@@ -13,5 +13,4 @@ import lombok.experimental.SuperBuilder;
 @Table(name = "pharmacist")
 public class Pharmacist extends User{
 
-
 }

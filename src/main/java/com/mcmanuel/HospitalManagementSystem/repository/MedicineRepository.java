@@ -11,10 +11,7 @@ public interface MedicineRepository  extends JpaRepository<Medicine,String> {
 
     Optional<Medicine> findByMedicineName(String medicineName);
 
-    @Query(value = "SELECT d FROM Medicine d WHERE :medicineId MEMBER OF d.distributor")
-    Optional<Set<String>> findByDistributors(String medicineId);
-
-    @Query(value = "SELECT d FROM Medicine d")
+    @Query(value = "SELECT m.distributor FROM Medicine m")
     Set<String> findAllDistributors();
 
 }

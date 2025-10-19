@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import lombok.*;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Getter
@@ -24,7 +25,7 @@ public class Medicine {
     private int quantity;
 
     @ElementCollection
-    private Set<String> distributor;
+    private Set<String> distributor = new HashSet<>();
 
 
 }

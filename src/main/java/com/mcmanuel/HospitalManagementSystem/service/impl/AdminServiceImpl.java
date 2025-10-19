@@ -22,7 +22,7 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public String addAdmin(String userId) throws UsernameNotFoundException {
 
-        Optional<String> optionalDepartment= adminRepo.findByDepartment(userId);
+        Optional<String> optionalDepartment= adminRepo.getUserDepartment(userId);
         if (optionalDepartment.isEmpty()) {
             throw new UsernameNotFoundException("Invalid user");
         }
@@ -67,7 +67,8 @@ public class AdminServiceImpl implements AdminService {
 
 
     public String removeAdmin(String adminId) {
-        Optional<String> optionalDepartment= adminRepo.findByDepartment(adminId);
+        Optional<String> optionalDepartment= adminRepo.getUserDepartment(adminId);
+
         if (optionalDepartment.isEmpty() || adminRepo.findById(adminId).isEmpty()) {
             throw new UsernameNotFoundException("Invalid user or admin");
         }
@@ -79,26 +80,31 @@ public class AdminServiceImpl implements AdminService {
                 Doctor doctor= doctorService.getUserById(adminId);
                 doctor.getRoles().remove(Role.ADMIN);
                 doctorService.updateUser(adminId,doctor);
+                adminRepo.deleteById(doctor.getUserId());
             }
 
             case "pharmacist":{
                 Pharmacist pharmacist= pharmacistService.getUserById(adminId);
                 pharmacist.getRoles().remove(Role.ADMIN);
                 pharmacistService.updateUser(adminId,pharmacist);
+                adminRepo.deleteById(pharmacist.getUserId());
             }
 
             case "reception":{
                 Receptionist receptionist= receptionistService.getUserById(adminId);
                 receptionist.getRoles().remove(Role.ADMIN);
                 receptionistService.updateUser(adminId,receptionist);
+                adminRepo.deleteById(receptionist.getUserId());
             }
         }
         return "updated";
     }
 
 
+
+
     public User getWorkerById(String userId) throws UsernameNotFoundException {
-        Optional<String> department = adminRepo.findByDepartment(userId);
+        Optional<String> department = adminRepo.getUserDepartment(userId);
 
         if(department.isEmpty()){
             throw new UsernameNotFoundException("User Not Found");
@@ -113,22 +119,49 @@ public class AdminServiceImpl implements AdminService {
 
     }
 
-    public Patient getPatientsByPatientId(String userId) throws NoSuchElementException {
-        adminRepo.findByEmail(userId);
-        return null;
-
-    }
-
+    /** This returns all the workers not just admins*/
     public List<User> getAllUser() {
         return adminRepo.getAll();
     }
 
-    public Admin updateUser(String userUd, Admin updatedUser) throws NoSuchElementException {
+
+    public Patient getPatientsByPatientId(String userId) throws NoSuchElementException {
+//        adminRepo.findByEmail(userId);
         return null;
+
     }
 
-    public void deleteUser(String userId) throws NoSuchElementException {
 
+    @Override
+    public List<Patient> getAllPatients() {
+        return List.of();
+    }
+
+
+//  /** This updates a worker not user*/
+//    public Admin updateUser(String userId, User updatedUser) throws NoSuchElementException {
+//        User user = getWorkerById(userId);
+//
+//        switch (user.getDepartment().toLowerCase()) {
+//            case "doctor" -> doctorService.updateUser()
+//            case "receptionist" -> receptionistService.getUserById(userId);
+//            case "pharmacist" -> pharmacistService.getUserById(userId);
+//            default -> throw new UsernameNotFoundException("User not found");
+//        };
+//        return null;
+//    }
+
+
+    /** This deletes a worker not a patient*/
+    public void deleteUser(String userId) throws NoSuchElementException {
+        User user = getWorkerById(userId);
+
+        switch (user.getDepartment().toLowerCase()) {
+            case "doctor" -> doctorService.deleteUser(user.getUserId());
+            case "receptionist" -> receptionistService.deleteUser(user.getUserId());
+            case "pharmacist" -> pharmacistService.getUserById(user.getUserId());
+            default -> throw new UsernameNotFoundException("User not found");
+        };
     }
 
 }
