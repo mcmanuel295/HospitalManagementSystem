@@ -74,7 +74,6 @@ public class DoctorServiceImpl implements DoctorService{
     public void deleteUser(String userId) throws NoSuchElementException {
         Doctor doctor = doctorRepo.findById(userId).orElseThrow();
         doctorRepo.delete(doctor);
-
     }
 
     @Override

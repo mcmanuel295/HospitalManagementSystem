@@ -1,11 +1,13 @@
 package com.mcmanuel.HospitalManagementSystem.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.mcmanuel.HospitalManagementSystem.pojo.Role;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -14,7 +16,48 @@ import lombok.*;
 @Builder
 @Entity
 @Table(name = "patient")
-public class Patient extends User{
+public class Patient{
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private String userId;
+
+    @Column(nullable = false)
+    private String firstName;
+
+    @Column(nullable = false)
+    private String lastName;
+
+    @Column(unique = true)
+    private String email;
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @Column(unique = true,nullable = false)
+    private String password;
+
     @Enumerated(EnumType.STRING)
-    private Role role = Role.PATIENT;
+    @Column(name = "role_name", length = 50)
+    private Role role =Role.PATIENT;
+
+    private String contact;
+
+    private List<String> problem;
+
+    @Column(name = "full_name")
+    private String fullName ;
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+        setFullName();
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+        setFullName();
+    }
+
+    public void setFullName() {
+        this.fullName =this.getLastName()+" "+getFirstName();
+    }
+
 }

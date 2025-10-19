@@ -11,11 +11,8 @@ import lombok.*;
 @Getter
 @Setter
 @AllArgsConstructor
-@NoArgsConstructor
 @Builder
 @Entity
 @Table(name = "receptionist")
 public class Receptionist extends User{
-    @Enumerated(EnumType.STRING)
-    private Role role = Role.RECEPTIONIST;
 }
