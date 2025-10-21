@@ -61,7 +61,7 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    public Patient assignPatient(String patientId) throws Exception {
+    public String assignPatient(String patientId) throws Exception {
 
         List<Doctor> availableDoctor = doctorService.getAvailableDoctors();
         if (availableDoctor == null) {
@@ -76,7 +76,17 @@ public class PatientServiceImpl implements PatientService {
         patientRepo.save(patient);
 
         doctorService.assignedPatients(assignedDoctor.getUserId());
-         return null;
+         return "assigned to "+assignedDoctor.getFullName();
+    }
+
+    @Override
+    public String unAssignPatient(String patientId) throws Exception {
+        Patient patient = getUserById(patientId);
+
+        patient.setAssignedDoctor(null);
+        patientRepo.save(patient);
+
+        return "Doctor unassigned from "+patient.getFullName();
     }
 
 }

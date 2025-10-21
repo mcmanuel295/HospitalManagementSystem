@@ -6,6 +6,7 @@ import com.mcmanuel.HospitalManagementSystem.pojo.Role;
 import com.mcmanuel.HospitalManagementSystem.service.intf.DoctorService;
 import com.mcmanuel.HospitalManagementSystem.repository.DoctorRepository;
 import com.mcmanuel.HospitalManagementSystem.request.DoctorRequest;
+import com.mcmanuel.HospitalManagementSystem.service.intf.PatientService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,7 @@ import java.util.NoSuchElementException;
 @RequiredArgsConstructor
 public class DoctorServiceImpl implements DoctorService{
     private final DoctorRepository doctorRepo;
+    private final PatientService patientService;
     private final BCryptPasswordEncoder passwordEncoder;
 
 
@@ -84,8 +86,22 @@ public class DoctorServiceImpl implements DoctorService{
     @Override
     public List<Patient> assignedPatients(String doctorId) throws NoSuchElementException {
         Doctor doctor = doctorRepo.findById(doctorId).orElseThrow();
-        doctorRepo.deleteById(doctor.getUserId());
-        return List.of();
+        return doctor.getAssignedPatients();
+    }
+
+    @Override
+    public void unassignPateint(String doctorId, String patientId)throws NoSuchElementException {
+        Doctor doctor = doctorRepo.findById(doctorId).orElseThrow();
+        Patient patient = patientService.getUserById(patientId);
+
+//        TODO Notify the receptionist
+
+        if (!doctor.getAssignedPatients().contains(patient) ){
+            throw new NoSuchElementException("Patient not found");
+        }
+
+        doctor.getAssignedPatients().remove(patient);
+        doctorRepo.save(doctor);
     }
 
     @Override

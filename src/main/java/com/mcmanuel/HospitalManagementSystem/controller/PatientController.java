@@ -67,7 +67,7 @@ public class PatientController {
 //    }
 
     @GetMapping("/ask-ai/{prompt}")
-    ResponseEntity<Patient> assignPateint(@PathVariable String prompt){
+    ResponseEntity<String> assignPateint(@PathVariable String prompt) throws Exception {
         return new ResponseEntity<>(patientService.assignPatient(prompt),HttpStatus.OK);
     }
 }

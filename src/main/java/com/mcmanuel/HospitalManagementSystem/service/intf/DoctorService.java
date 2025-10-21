@@ -11,5 +11,6 @@ public interface DoctorService extends UserService<Doctor>{
     Doctor addDoctor(DoctorRequest addDoctorRequest);
     List<Doctor> getAvailableDoctors(String specialty);
     List<Patient> assignedPatients(String doctorsId) throws Exception;
+    void  unassignPateint(String doctorId,String patientId);
     String updateAvailability(String doctorId);
 }
