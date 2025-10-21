@@ -62,8 +62,13 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public String assignPatient(String patientId) throws Exception {
+        Patient patient = getUserById(patientId);
 
-        List<Doctor> availableDoctor = doctorService.getAvailableDoctors();
+//        TODO Get patients problems,compare which specialization fit s it
+
+
+        List<Doctor> availableDoctor = doctorService.getAvailableDoctors("nurse");
+
         if (availableDoctor == null) {
             System.out.println("No doctor available");
         }
@@ -71,18 +76,21 @@ public class PatientServiceImpl implements PatientService {
         assert availableDoctor != null;
         Doctor assignedDoctor = availableDoctor.get((int) (Math.random() * availableDoctor.size()));
 
-        Patient patient = getUserById(patientId);
         patient.setAssignedDoctor(assignedDoctor);
-        patientRepo.save(patient);
+        assignedDoctor.getAssignedPatients().add(patient);
+        assignedDoctor.setAvailable(!assignedDoctor.isAvailable());
 
-        doctorService.assignedPatients(assignedDoctor.getUserId());
-         return "assigned to "+assignedDoctor.getFullName();
+//        TODO Notify the doctor
+
+        doctorService.updateUser(assignedDoctor.getUserId(),assignedDoctor);
+        patientRepo.save(patient);
+        return "assigned to "+assignedDoctor.getFullName();
     }
 
     @Override
     public String unAssignPatient(String patientId) throws Exception {
         Patient patient = getUserById(patientId);
-
+        doctorService.unassignPatient(patient.getAssignedDoctor().getUserId(),patientId);
         patient.setAssignedDoctor(null);
         patientRepo.save(patient);
 

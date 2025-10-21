@@ -3,10 +3,10 @@ package com.mcmanuel.HospitalManagementSystem.service.impl;
 import com.mcmanuel.HospitalManagementSystem.entity.Doctor;
 import com.mcmanuel.HospitalManagementSystem.entity.Patient;
 import com.mcmanuel.HospitalManagementSystem.pojo.Role;
+import com.mcmanuel.HospitalManagementSystem.repository.PatientRepository;
 import com.mcmanuel.HospitalManagementSystem.service.intf.DoctorService;
 import com.mcmanuel.HospitalManagementSystem.repository.DoctorRepository;
 import com.mcmanuel.HospitalManagementSystem.request.DoctorRequest;
-import com.mcmanuel.HospitalManagementSystem.service.intf.PatientService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -14,12 +14,13 @@ import org.springframework.stereotype.Service;
 import java.util.HashSet;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
 public class DoctorServiceImpl implements DoctorService{
     private final DoctorRepository doctorRepo;
-    private final PatientService patientService;
+    private final PatientRepository patientRepository;
     private final BCryptPasswordEncoder passwordEncoder;
 
 
@@ -90,9 +91,9 @@ public class DoctorServiceImpl implements DoctorService{
     }
 
     @Override
-    public void unassignPateint(String doctorId, String patientId)throws NoSuchElementException {
+    public void unassignPatient(String doctorId, String patientId)throws NoSuchElementException {
         Doctor doctor = doctorRepo.findById(doctorId).orElseThrow();
-        Patient patient = patientService.getUserById(patientId);
+        Patient patient = patientRepository.findById(patientId).orElseThrow();
 
 //        TODO Notify the receptionist
 
@@ -102,6 +103,7 @@ public class DoctorServiceImpl implements DoctorService{
 
         doctor.getAssignedPatients().remove(patient);
         doctorRepo.save(doctor);
+//        return patient.getFullName()+" unassigned to "+doctor.getFullName();
     }
 
     @Override
@@ -113,6 +115,11 @@ public class DoctorServiceImpl implements DoctorService{
         doctor.get().setAvailable(!doctor.get().isAvailable());
         doctorRepo.save(doctor.get());
         return ("Doctor "+doctor.get().getFullName()+" Availability: "+doctor.get().isAvailable());
+    }
+
+    @Override
+    public Set<String> getAllSpecialty() {
+        return doctorRepo.getAllSpecialty();
     }
 
 }

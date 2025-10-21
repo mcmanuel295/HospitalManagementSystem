@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 public interface DoctorRepository extends JpaRepository<Doctor, String> {
@@ -14,4 +15,7 @@ public interface DoctorRepository extends JpaRepository<Doctor, String> {
     List<Doctor> findAvailableDoctors(@Param("specialty") String specialty);
 
     Doctor findByEmail(String email);
+
+    @Query(value = "SELECT specialization FROM doctor_specialization",nativeQuery = true)
+    Set<String> getAllSpecialty();
 }

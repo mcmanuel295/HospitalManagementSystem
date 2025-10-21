@@ -7,10 +7,12 @@ import com.mcmanuel.HospitalManagementSystem.request.DoctorRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Set;
 
 @RestController
 @RequiredArgsConstructor
@@ -104,4 +106,17 @@ public class DoctorController {
         return new ResponseEntity<>(availability,HttpStatus.OK);
     }
 
+//    @PutMapping("/{doctorId}/unassign/{patientId}")
+//    public ResponseEntity<String> unassignPateint(@PathVariable @Validated String doctorId,@PathVariable @Validated String patientId){
+//        String assign =doctorService.unassignPatient(doctorId,patientId);
+//        if (assign == null) {
+//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//        }
+//        return new ResponseEntity<>(assign,HttpStatus.OK);
+//    }
+
+    @GetMapping("/allSpecialization")
+    public ResponseEntity<Set<String>> getAllSpecialty(){
+        return new ResponseEntity<>(doctorService.getAllSpecialty(),HttpStatus.OK);
+    }
 }

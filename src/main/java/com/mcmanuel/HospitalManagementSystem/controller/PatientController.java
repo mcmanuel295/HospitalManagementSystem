@@ -70,4 +70,14 @@ public class PatientController {
     ResponseEntity<String> assignPateint(@PathVariable String prompt) throws Exception {
         return new ResponseEntity<>(patientService.assignPatient(prompt),HttpStatus.OK);
     }
+
+
+    @PutMapping("/{patientId}/unassign")
+    public ResponseEntity<String> unassignPatient(@PathVariable @Validated String patientId) throws Exception {
+        String assign =patientService.unAssignPatient(patientId);
+        if (assign == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(assign,HttpStatus.OK);
+    }
 }
