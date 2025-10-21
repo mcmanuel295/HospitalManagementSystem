@@ -3,6 +3,8 @@ package com.mcmanuel.HospitalManagementSystem.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -18,6 +20,9 @@ public class Doctor extends User{
     @ElementCollection(fetch = FetchType.LAZY)
     private Set<String> specialization;
     private boolean available;
+
+    @OneToMany
+    private List<Patient> assignedPatients;
 
 
     @Override

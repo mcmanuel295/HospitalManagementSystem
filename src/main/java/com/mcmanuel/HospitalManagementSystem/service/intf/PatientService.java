@@ -18,4 +18,5 @@ public interface PatientService{
 
     void deleteUser(String userId) throws NoSuchElementException;
 
+    Patient assignPatient(String patientId) throws Exception;
 }

@@ -31,6 +31,9 @@ public class Patient{
     @Column(unique = true)
     private String email;
 
+    @ManyToOne
+    private Doctor assignedDoctor;
+
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Column(unique = true,nullable = false)
     private String password;

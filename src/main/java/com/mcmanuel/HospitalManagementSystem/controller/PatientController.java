@@ -5,10 +5,8 @@ import com.mcmanuel.HospitalManagementSystem.service.intf.PatientService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -19,27 +17,57 @@ import java.util.NoSuchElementException;
 public class PatientController {
     private final PatientService patientService;
 
-    @PostMapping
-    ResponseEntity<Patient> registserPatient(@RequestBody Patient patient){
+    @PostMapping("/")
+    ResponseEntity<Patient> registserPatient(@RequestBody @Validated Patient patient){
         return new ResponseEntity<>(patientService.registerPatient(patient),HttpStatus.CREATED);
     }
 
-    @PostMapping
-    ResponseEntity<Patient> createPateint(@RequestBody Patient patient){
-        return new ResponseEntity<>(patientService.createPatient(patient),HttpStatus.CREATED);
+
+    @GetMapping("/{userId}")
+    ResponseEntity<Patient> getUserById(@PathVariable @Validated String userId) throws NoSuchElementException{
+        Patient patient = patientService.getUserById(userId);
+        if (patient==null){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(patient,HttpStatus.OK);
     }
 
 
-    @PostMapping("/")
-    ResponseEntity<Patient> getUserById(String userId) throws NoSuchElementException{
-        patientService.getUserById(userId);
+    @GetMapping("/email/{email}")
+    ResponseEntity<Patient> getUserByEmail(@PathVariable @Validated String email) throws NoSuchElementException{
+        Patient patient = patientService.getUserByEmail(email);
+        if (patient==null){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(patient,HttpStatus.OK);
     }
 
-    Patient getUserByEmail(String email) throws NoSuchElementException;
+    @GetMapping("/")
+    ResponseEntity<List<Patient>> getAllUser(){
+        return new ResponseEntity<>(patientService.getAllUser(),HttpStatus.OK);
+    }
 
-    List<Patient> getAllUser();
+    @PutMapping("/{userId}")
+    ResponseEntity<Patient> updateUser(@PathVariable String userId, @RequestBody Patient updatedUser) throws NoSuchElementException{
+        Patient patient = patientService.updateUser(userId,updatedUser);
+        if (patient == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(patient,HttpStatus.OK);
+    }
 
-    Patient updateUser(String userUd, Patient updatedUser) throws NoSuchElementException;
+    ResponseEntity<String> deleteUser(String userId) throws NoSuchElementException{
+        patientService.deleteUser(userId);
+        return new ResponseEntity<>("Delelted",HttpStatus.OK);
+    }
 
-    void deleteUser(String userId) throws NoSuchElementException
+//    @PostMapping
+//    ResponseEntity<Patient> assignPateint(@RequestBody String patientId){
+//        return new ResponseEntity<>(patientService.assignPatient(patientId),HttpStatus.CREATED);
+//    }
+
+    @GetMapping("/ask-ai/{prompt}")
+    ResponseEntity<Patient> assignPateint(@PathVariable String prompt){
+        return new ResponseEntity<>(patientService.assignPatient(prompt),HttpStatus.OK);
+    }
 }
