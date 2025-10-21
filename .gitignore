@@ -1,5 +1,5 @@
 # Custom Environment Files
-.env
+**/src/main/resources/.env
 
 HELP.md
 target/
