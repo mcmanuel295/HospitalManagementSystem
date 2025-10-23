@@ -25,7 +25,7 @@ public class PatientController {
 
     @GetMapping("/{userId}")
     ResponseEntity<Patient> getUserById(@PathVariable @Validated String userId) throws NoSuchElementException{
-        Patient patient = patientService.getUserById(userId);
+        Patient patient = patientService.getPatientById(userId);
         if (patient==null){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -43,8 +43,8 @@ public class PatientController {
     }
 
     @GetMapping("/")
-    ResponseEntity<List<Patient>> getAllUser(){
-        return new ResponseEntity<>(patientService.getAllUser(),HttpStatus.OK);
+    ResponseEntity<List<Patient>> getAllPatients(){
+        return new ResponseEntity<>(patientService.getAllPatients(),HttpStatus.OK);
     }
 
     @PutMapping("/{userId}")
@@ -57,7 +57,7 @@ public class PatientController {
     }
 
     ResponseEntity<String> deleteUser(String userId) throws NoSuchElementException{
-        patientService.deleteUser(userId);
+        patientService.deletePatient(userId);
         return new ResponseEntity<>("Deleted",HttpStatus.OK);
     }
 

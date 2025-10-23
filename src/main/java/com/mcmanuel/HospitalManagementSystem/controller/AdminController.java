@@ -1,10 +1,15 @@
 package com.mcmanuel.HospitalManagementSystem.controller;
 
+import com.mcmanuel.HospitalManagementSystem.entity.Patient;
+import com.mcmanuel.HospitalManagementSystem.entity.User;
 import com.mcmanuel.HospitalManagementSystem.service.intf.AdminService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.NoSuchElementException;
 
 @RestController
 @RequiredArgsConstructor
@@ -29,4 +34,11 @@ public class AdminController {
         }
         return new ResponseEntity<>("Added",HttpStatus.OK);
     }
+
+    @GetMapping("/users")
+    ResponseEntity<List<User>> getAllUser(){
+        return new ResponseEntity<>(adminService.getAllUser(),HttpStatus.OK);
+    }
+
+
 }

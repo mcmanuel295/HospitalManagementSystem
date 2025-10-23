@@ -8,15 +8,15 @@ import java.util.NoSuchElementException;
 public interface PatientService{
     Patient registerPatient(Patient patient);
 
-    Patient getUserById(String userId) throws NoSuchElementException;
+    Patient getPatientById(String userId) throws NoSuchElementException;
 
     Patient getUserByEmail(String email) throws NoSuchElementException;
 
-    List<Patient> getAllUser();
+    List<Patient> getAllPatients();
 
-    Patient updateUser(String userUd, Patient updatedUser) throws NoSuchElementException;
+    Patient updatePatient(String userUd, Patient updatedUser) throws NoSuchElementException;
 
-    void deleteUser(String userId) throws NoSuchElementException;
+    void deletePatient(String userId) throws NoSuchElementException;
 
     String assignPatient(String patientId) throws Exception;
 

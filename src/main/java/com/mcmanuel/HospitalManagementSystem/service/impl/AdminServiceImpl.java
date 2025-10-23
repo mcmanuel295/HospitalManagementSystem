@@ -101,8 +101,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
 
-
-
+    @Override
     public User getWorkerById(String userId) throws UsernameNotFoundException {
         Optional<String> department = adminRepo.getUserDepartment(userId);
 
@@ -120,22 +119,11 @@ public class AdminServiceImpl implements AdminService {
     }
 
     /** This returns all the workers not just admins*/
+    @Override
     public List<User> getAllUser() {
         return adminRepo.getAll();
     }
 
-
-    public Patient getPatientsByPatientId(String userId) throws NoSuchElementException {
-//        adminRepo.findByEmail(userId);
-        return null;
-
-    }
-
-
-    @Override
-    public List<Patient> getAllPatients() {
-        return List.of();
-    }
 
 
 //  /** This updates a worker not user*/
@@ -153,6 +141,7 @@ public class AdminServiceImpl implements AdminService {
 
 
     /** This deletes a worker not a patient*/
+    @Override
     public void deleteUser(String userId) throws NoSuchElementException {
         User user = getWorkerById(userId);
 

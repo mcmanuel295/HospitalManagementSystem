@@ -33,7 +33,7 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    public Patient getUserById(String userId) throws NoSuchElementException {
+    public Patient getPatientById(String userId) throws NoSuchElementException {
         return patientRepo.findById(userId).orElseThrow();
     }
 
@@ -43,26 +43,26 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    public List<Patient> getAllUser() {
+    public List<Patient> getAllPatients() {
         return patientRepo.findAll();
     }
 
     @Override
-    public Patient updateUser(String userUd, Patient updatedUser) throws NoSuchElementException {
-        Patient patient = getUserById(userUd);
+    public Patient updatePatient(String userUd, Patient updatedUser) throws NoSuchElementException {
+        Patient patient = getPatientById(userUd);
         updatedUser.setUserId(patient.getUserId());
         return patientRepo.save(updatedUser);
     }
 
     @Override
-    public void deleteUser(String userId) throws NoSuchElementException {
-        Patient patient =getUserById(userId);
+    public void deletePatient(String userId) throws NoSuchElementException {
+        Patient patient =getPatientById(userId);
         patientRepo.deleteById(patient.getUserId());
     }
 
     @Override
     public String assignPatient(String patientId) throws Exception {
-        Patient patient = getUserById(patientId);
+        Patient patient = getPatientById(patientId);
 
 //        TODO Get patients problems,compare which specialization fit s it
 
@@ -89,7 +89,7 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public String unAssignPatient(String patientId) throws Exception {
-        Patient patient = getUserById(patientId);
+        Patient patient = getPatientById(patientId);
         doctorService.unassignPatient(patient.getAssignedDoctor().getUserId(),patientId);
         patient.setAssignedDoctor(null);
         patientRepo.save(patient);
