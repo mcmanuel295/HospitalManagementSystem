@@ -58,7 +58,7 @@ public class PatientController {
 
     ResponseEntity<String> deleteUser(String userId) throws NoSuchElementException{
         patientService.deleteUser(userId);
-        return new ResponseEntity<>("Delelted",HttpStatus.OK);
+        return new ResponseEntity<>("Deleted",HttpStatus.OK);
     }
 
 //    @PostMapping
@@ -66,9 +66,9 @@ public class PatientController {
 //        return new ResponseEntity<>(patientService.assignPatient(patientId),HttpStatus.CREATED);
 //    }
 
-    @GetMapping("/ask-ai/{prompt}")
-    ResponseEntity<String> assignPateint(@PathVariable String prompt) throws Exception {
-        return new ResponseEntity<>(patientService.assignPatient(prompt),HttpStatus.OK);
+    @GetMapping("/{patientId}/assign")
+    ResponseEntity<String> assignPateint(@PathVariable String patientId) throws Exception {
+        return new ResponseEntity<>(patientService.assignPatient(patientId),HttpStatus.OK);
     }
 
 

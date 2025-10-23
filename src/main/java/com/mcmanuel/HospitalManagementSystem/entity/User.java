@@ -40,7 +40,8 @@ public abstract class User {
     @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(
             name = "user_roles",
-            joinColumns = @JoinColumn(name = "userId", referencedColumnName = "userId")
+            joinColumns = @JoinColumn(
+                    name = "userId", referencedColumnName = "userId", columnDefinition = "VARCHAR(255) REFERENCES User(userId) ON DELETE CASCADE")
     )
     @Enumerated(EnumType.STRING)
     @Column(name = "role_name", length = 50)
