@@ -14,14 +14,20 @@ import java.util.Set;
 @AllArgsConstructor
 @Entity
 @Table(name = "doctor")
+@PrimaryKeyJoinColumn(name = "user_id")
 public class Doctor extends User{
     @Column(nullable = false)
-
     @ElementCollection(fetch = FetchType.LAZY)
+    @CollectionTable(
+            name = "doctor_specialization",
+            joinColumns = @JoinColumn(
+                    name = "doctor_id_fk",referencedColumnName = "user_id"
+            )
+    )
     private Set<String> specialization;
     private boolean available;
 
-    @OneToMany
+    @OneToMany(mappedBy = "assignedDoctor",orphanRemoval = true,cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private List<Patient> assignedPatients;
 
 

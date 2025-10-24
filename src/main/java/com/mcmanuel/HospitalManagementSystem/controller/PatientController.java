@@ -49,7 +49,7 @@ public class PatientController {
 
     @PutMapping("/{userId}")
     ResponseEntity<Patient> updateUser(@PathVariable String userId, @RequestBody Patient updatedUser) throws NoSuchElementException{
-        Patient patient = patientService.updateUser(userId,updatedUser);
+        Patient patient = patientService.updatePatient(userId,updatedUser);
         if (patient == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

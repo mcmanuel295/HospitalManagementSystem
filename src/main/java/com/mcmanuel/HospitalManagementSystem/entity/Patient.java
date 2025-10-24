@@ -31,7 +31,8 @@ public class Patient{
     @Column(unique = true)
     private String email;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @JoinColumn(name = "doctor_id",referencedColumnName = "user_id")
     private Doctor assignedDoctor;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)

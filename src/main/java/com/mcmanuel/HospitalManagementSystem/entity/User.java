@@ -1,13 +1,11 @@
 package com.mcmanuel.HospitalManagementSystem.entity;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.mcmanuel.HospitalManagementSystem.pojo.Role;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-import java.util.HashSet;
 import java.util.Set;
 
 
@@ -21,6 +19,7 @@ import java.util.Set;
 public abstract class User {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "user_id")
     private String userId;
 
     @Column(nullable = false)
@@ -37,15 +36,16 @@ public abstract class User {
     private String password;
 
 
-    @ElementCollection(fetch = FetchType.LAZY)
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(
             name = "user_roles",
             joinColumns = @JoinColumn(
-                    name = "userId", referencedColumnName = "userId", columnDefinition = "VARCHAR(255) REFERENCES User(userId) ON DELETE CASCADE")
+                    name = "user_id", referencedColumnName = "user_id"
+            )
     )
     @Enumerated(EnumType.STRING)
     @Column(name = "role_name", length = 50)
-    private Set<Role> roles =new HashSet<>();
+    private Set<Role> roles;
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private String department;
