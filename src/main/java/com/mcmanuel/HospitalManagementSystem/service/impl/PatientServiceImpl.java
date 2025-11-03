@@ -6,24 +6,24 @@ import com.mcmanuel.HospitalManagementSystem.repository.PatientRepository;
 import com.mcmanuel.HospitalManagementSystem.service.intf.DoctorService;
 import com.mcmanuel.HospitalManagementSystem.service.intf.PatientService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.model.ChatModel;
+import org.springframework.ai.chat.prompt.PromptTemplate;
 import org.springframework.ai.openai.OpenAiChatModel;
 import org.springframework.ai.openai.OpenAiChatOptions;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.security.SecureRandom;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
+
 @Service
 @RequiredArgsConstructor
 public class PatientServiceImpl implements PatientService {
     private final PatientRepository patientRepo;
     private final PasswordEncoder passwordEncoder;
     private final DoctorService doctorService;
-    private ChatModel chatModel;
+    private final ChatModel chatModel;
 
     @Override
     public Patient registerPatient(Patient patient) {
@@ -60,15 +60,15 @@ public class PatientServiceImpl implements PatientService {
         patientRepo.deleteById(patient.getUserId());
     }
 
+
+
     @Override
     public String assignPatient(String patientId) throws Exception {
         Patient patient = getPatientById(patientId);
 
-//        TODO Get patients problems,compare which specialization fit s it
+        final String specialty = getString(patient);
 
-
-        List<Doctor> availableDoctor = doctorService.getAvailableDoctors("nurse");
-
+        List<Doctor> availableDoctor = doctorService.getAvailableDoctors(specialty);
         if (availableDoctor == null) {
             System.out.println("No doctor available");
         }
@@ -85,10 +85,34 @@ public class PatientServiceImpl implements PatientService {
         doctorService.updateUser(assignedDoctor.getUserId(),assignedDoctor);
         patientRepo.save(patient);
         return "assigned to "+assignedDoctor.getFullName();
+//        return specialty.trim().replaceAll("[^a-zA-Z\\s-]", "");
     }
 
+
+    private String getString(Patient patient) {
+        PromptTemplate promptTemplate = new PromptTemplate("""
+            You are a medical assignment specialist. Your sole job is to match a patient's problems 
+            to the single most appropriate medical specialty from the 'Available Specialties' list.
+
+            Available Specialties: {specialties}
+
+            Patient Problems: {problems}
+
+            **CRITICAL INSTRUCTION: Respond ONLY with the name of the specialty. Do NOT include 
+            any other text, punctuation, explanation, or conversational fillers.**
+            """);
+
+        Map<String, Object> promptVariables = Map.of(
+                "problems", patient.getProblem(),
+                "specialties", doctorService.getAllSpecialty()
+        );
+
+        return chatModel.call(promptTemplate.render(promptVariables));
+    }
+
+
     @Override
-    public String unAssignPatient(String patientId) throws Exception {
+    public String unAssignPatient(String patientId) throws NoSuchElementException {
         Patient patient = getPatientById(patientId);
         doctorService.unassignPatient(patient.getAssignedDoctor().getUserId(),patientId);
         patient.setAssignedDoctor(null);

@@ -3,6 +3,7 @@ package com.mcmanuel.HospitalManagementSystem.controller;
 import com.mcmanuel.HospitalManagementSystem.entity.Receptionist;
 import com.mcmanuel.HospitalManagementSystem.service.intf.ReceptionistService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -59,4 +60,5 @@ public class ReceptionistController {
         receptionistService.deleteUser(userId);
         return new ResponseEntity<>("deleted",HttpStatus.OK);
     }
+
 }

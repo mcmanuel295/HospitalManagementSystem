@@ -5,6 +5,10 @@ import com.mcmanuel.HospitalManagementSystem.pojo.Role;
 import com.mcmanuel.HospitalManagementSystem.repository.ReceptionistRepository;
 import com.mcmanuel.HospitalManagementSystem.service.intf.ReceptionistService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.ai.chat.model.ChatModel;
+import org.springframework.ai.chat.model.ChatResponse;
+import org.springframework.ai.chat.prompt.Prompt;
+import org.springframework.ai.openai.OpenAiChatOptions;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
@@ -21,7 +25,6 @@ public class ReceptionistServiceImpl implements ReceptionistService {
     private final ReceptionistRepository receptionistRepo;
     private final PasswordEncoder passwordEncoder;
 
-
     @Override
     public Receptionist addReceptionist(@RequestBody @Validated Receptionist receptionist){
 
@@ -35,7 +38,6 @@ public class ReceptionistServiceImpl implements ReceptionistService {
 
         return receptionistRepo.save(receptionist);
     }
-
 
     @Override
     public Receptionist getUserById(String userId) throws NoSuchElementException {
