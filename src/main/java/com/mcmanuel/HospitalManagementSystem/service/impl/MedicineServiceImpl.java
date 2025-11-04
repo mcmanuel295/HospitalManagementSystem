@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
 import javax.naming.LimitExceededException;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -23,6 +24,7 @@ public class MedicineServiceImpl implements MedicineService {
            return medicineRepo.save(medicine);
         }
 
+        medicine.setDateCreated(LocalDateTime.now());
         savedMedicine.get().setQuantity( medicine.getQuantity()+1);
         savedMedicine.get().getDistributor().addAll(medicine.getDistributor());
 

@@ -4,6 +4,7 @@ import com.mcmanuel.HospitalManagementSystem.entity.Receptionist;
 import com.mcmanuel.HospitalManagementSystem.pojo.Role;
 import com.mcmanuel.HospitalManagementSystem.repository.ReceptionistRepository;
 import com.mcmanuel.HospitalManagementSystem.service.intf.ReceptionistService;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.ai.chat.model.ChatResponse;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -35,7 +37,7 @@ public class ReceptionistServiceImpl implements ReceptionistService {
         receptionist.setPassword(passwordEncoder.encode(receptionist.getPassword()));
         receptionist.setRoles(new HashSet<>());
         receptionist.getRoles().add(Role.RECEPTIONIST);
-
+        receptionist.setDateCreated(LocalDateTime.now());
         return receptionistRepo.save(receptionist);
     }
 

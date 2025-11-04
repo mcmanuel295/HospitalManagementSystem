@@ -12,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
@@ -25,6 +26,7 @@ public class PatientServiceImpl implements PatientService {
     @Override
     public Patient registerPatient(Patient patient) {
 
+        patient.setDateCreated(LocalDateTime.now());
         patient.setPassword( passwordEncoder.encode(patient.getPassword()));
         return patientRepo.save(patient);
     }
@@ -64,12 +66,14 @@ public class PatientServiceImpl implements PatientService {
         return list;
     }
 
+
     @Override
     public Patient updatePatient(String userUd, Patient updatedUser) throws NoSuchElementException {
         Patient patient = getPatientById(userUd);
         updatedUser.setUserId(patient.getUserId());
         return patientRepo.save(updatedUser);
     }
+
 
     @Override
     public void deletePatient(String userId) throws NoSuchElementException {
@@ -92,17 +96,10 @@ public class PatientServiceImpl implements PatientService {
         List<Doctor> availableDoctor = doctorService.getAvailableDoctors(specialty);
 
         if (availableDoctor == null || availableDoctor.isEmpty()) {
-            System.out.println("No doctor available");
             return "No doctor available";
         }
 
-        System.out.println("available doctor: "+availableDoctor.size()+ ": "+availableDoctor);
-
-        int figure = (int) (Math.random() * availableDoctor.size());
-
-        Doctor assignedDoctor = availableDoctor.get(figure);
-        System.out.println("Assigned doctor is "+assignedDoctor);
-
+        Doctor assignedDoctor = availableDoctor.get((int) (Math.random() * availableDoctor.size()));
 
         patient.setAssignedDoctor(assignedDoctor);
         assignedDoctor.getAssignedPatients().add(patient);
@@ -143,7 +140,6 @@ public class PatientServiceImpl implements PatientService {
     public String unAssignPatient(String patientId) throws NoSuchElementException {
         Patient patient = getPatientById(patientId);
 
-        System.out.println("Patient is "+patient);
         doctorService.unassignPatient(patient.getAssignedDoctor().getUserId(),patientId);
         patient.setAssignedDoctor(null);
         patientRepo.save(patient);

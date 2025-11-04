@@ -3,6 +3,9 @@ package com.mcmanuel.HospitalManagementSystem.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import lombok.*;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Getter
@@ -20,6 +23,8 @@ public class Medicine {
     @Column(name = "medicine_name",unique = true)
     private String medicineName;
 
+    @Column(name = "date_created", updatable = false,nullable = false)
+    private LocalDateTime dateCreated;
 
     @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(

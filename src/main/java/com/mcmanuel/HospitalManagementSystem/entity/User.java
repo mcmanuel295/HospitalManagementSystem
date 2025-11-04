@@ -7,6 +7,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 
@@ -53,6 +55,9 @@ public abstract class User {
     private String department;
 
     private String contact;
+
+    @Column(name = "date_created", updatable = false,nullable = false)
+    private LocalDateTime dateCreated;
 
     @Column(name = "full_name")
     private String fullName ;

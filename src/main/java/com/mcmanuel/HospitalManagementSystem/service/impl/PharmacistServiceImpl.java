@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -29,6 +30,8 @@ public class PharmacistServiceImpl implements PharmacistService {
                 .contact(pharmacistRequest.getContact())
                 .password(
                         passwordEncoder.encode(pharmacistRequest.getPassword())
+                )
+                .dateCreated(LocalDateTime.now()
                 )
                 .build();
 

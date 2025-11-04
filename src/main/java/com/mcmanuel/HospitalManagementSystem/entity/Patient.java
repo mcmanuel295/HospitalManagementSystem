@@ -6,6 +6,8 @@ import com.mcmanuel.HospitalManagementSystem.pojo.Role;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -49,6 +51,10 @@ public class Patient{
 
     private List<String> problem;
 
+    @Column(name = "date_created", updatable = false,nullable = false)
+    private LocalDateTime dateCreated;
+
+
     @Column(name = "full_name")
     private String fullName ;
 
@@ -65,5 +71,7 @@ public class Patient{
     public void setFullName() {
         this.fullName =this.getLastName()+" "+getFirstName();
     }
+
+
 
 }

@@ -12,6 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -38,6 +39,7 @@ public class DoctorServiceImpl implements DoctorService{
                 .specialization(doctorRequest.getSpecialization())
                 .contact(doctorRequest.getContact())
                 .department(Doctor.class.getSimpleName())
+                .dateCreated(LocalDateTime.now())
                 .build();
         doctor.setFirstName(doctorRequest.getFirstName());
         doctor.setLastName(doctorRequest.getLastName());
