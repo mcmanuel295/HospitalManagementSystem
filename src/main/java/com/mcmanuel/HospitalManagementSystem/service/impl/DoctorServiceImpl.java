@@ -7,7 +7,6 @@ import com.mcmanuel.HospitalManagementSystem.repository.PatientRepository;
 import com.mcmanuel.HospitalManagementSystem.service.intf.DoctorService;
 import com.mcmanuel.HospitalManagementSystem.repository.DoctorRepository;
 import com.mcmanuel.HospitalManagementSystem.request.DoctorRequest;
-import com.mcmanuel.HospitalManagementSystem.service.intf.PatientService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
