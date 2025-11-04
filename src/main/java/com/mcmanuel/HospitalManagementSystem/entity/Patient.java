@@ -1,5 +1,6 @@
 package com.mcmanuel.HospitalManagementSystem.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.mcmanuel.HospitalManagementSystem.pojo.Role;
 import jakarta.persistence.*;
@@ -31,7 +32,8 @@ public class Patient{
     @Column(unique = true)
     private String email;
 
-    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @JsonBackReference
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "doctor_id",referencedColumnName = "user_id")
     private Doctor assignedDoctor;
 

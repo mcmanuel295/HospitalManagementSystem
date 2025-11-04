@@ -1,5 +1,6 @@
 package com.mcmanuel.HospitalManagementSystem.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.mcmanuel.HospitalManagementSystem.pojo.Role;
 import jakarta.persistence.*;
@@ -32,6 +33,7 @@ public abstract class User {
     private String email;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @JsonIgnore
     @Column(unique = true,nullable = false)
     private String password;
 

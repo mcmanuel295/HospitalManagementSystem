@@ -13,6 +13,7 @@ import org.springframework.ai.openai.OpenAiChatModel;
 import org.springframework.ai.openai.OpenAiChatOptions;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.security.SecureRandom;
 import java.util.*;
@@ -63,18 +64,29 @@ public class PatientServiceImpl implements PatientService {
 
 
     @Override
-    public String assignPatient(String patientId) throws Exception {
+    public String assignPatient(String patientId) throws NoSuchElementException {
         Patient patient = getPatientById(patientId);
+
+        if (patient.getAssignedDoctor() != null) {
+            return "Patient already assigned";
+        }
 
         final String specialty = getString(patient);
 
         List<Doctor> availableDoctor = doctorService.getAvailableDoctors(specialty);
-        if (availableDoctor == null) {
+
+        if (availableDoctor == null || availableDoctor.isEmpty()) {
             System.out.println("No doctor available");
+            return "No doctor available";
         }
 
-        assert availableDoctor != null;
-        Doctor assignedDoctor = availableDoctor.get((int) (Math.random() * availableDoctor.size()));
+        System.out.println("available doctor: "+availableDoctor.size()+ ": "+availableDoctor);
+
+        int figure = (int) (Math.random() * availableDoctor.size());
+
+        Doctor assignedDoctor = availableDoctor.get(figure);
+        System.out.println("Assigned doctor is "+assignedDoctor);
+
 
         patient.setAssignedDoctor(assignedDoctor);
         assignedDoctor.getAssignedPatients().add(patient);
@@ -85,20 +97,19 @@ public class PatientServiceImpl implements PatientService {
         doctorService.updateUser(assignedDoctor.getUserId(),assignedDoctor);
         patientRepo.save(patient);
         return "assigned to "+assignedDoctor.getFullName();
-//        return specialty.trim().replaceAll("[^a-zA-Z\\s-]", "");
     }
 
 
     private String getString(Patient patient) {
         PromptTemplate promptTemplate = new PromptTemplate("""
-            You are a medical assignment specialist. Your sole job is to match a patient's problems 
+            You are a medical assignment specialist. Your sole job is to match a patient's problems
             to the single most appropriate medical specialty from the 'Available Specialties' list.
 
             Available Specialties: {specialties}
 
             Patient Problems: {problems}
 
-            **CRITICAL INSTRUCTION: Respond ONLY with the name of the specialty. Do NOT include 
+            **CRITICAL INSTRUCTION: Respond ONLY with the name of the specialty. Do NOT include
             any other text, punctuation, explanation, or conversational fillers.**
             """);
 
@@ -112,8 +123,11 @@ public class PatientServiceImpl implements PatientService {
 
 
     @Override
+    @Transactional
     public String unAssignPatient(String patientId) throws NoSuchElementException {
         Patient patient = getPatientById(patientId);
+
+        System.out.println("Patient is "+patient);
         doctorService.unassignPatient(patient.getAssignedDoctor().getUserId(),patientId);
         patient.setAssignedDoctor(null);
         patientRepo.save(patient);

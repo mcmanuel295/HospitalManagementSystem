@@ -1,5 +1,6 @@
 package com.mcmanuel.HospitalManagementSystem.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -27,7 +28,8 @@ public class Doctor extends User{
     private Set<String> specialization;
     private boolean available;
 
-    @OneToMany(mappedBy = "assignedDoctor",orphanRemoval = true,cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @JsonManagedReference
+    @OneToMany(mappedBy = "assignedDoctor",fetch = FetchType.LAZY)
     private List<Patient> assignedPatients;
 
 

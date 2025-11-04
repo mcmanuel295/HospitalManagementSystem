@@ -7,7 +7,6 @@ import com.mcmanuel.HospitalManagementSystem.request.DoctorRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -90,7 +89,7 @@ public class DoctorController {
     @GetMapping("/{doctorId}/patients")
 //    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<Patient>> getAssignedPatients(@PathVariable String doctorId) throws Exception {
-        var doctor = doctorService.assignedPatients(doctorId);
+        var doctor = doctorService.getAssignedPateints(doctorId);
         if (doctor == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

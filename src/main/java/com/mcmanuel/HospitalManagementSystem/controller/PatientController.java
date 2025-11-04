@@ -66,7 +66,7 @@ public class PatientController {
 //        return new ResponseEntity<>(patientService.assignPatient(patientId),HttpStatus.CREATED);
 //    }
 
-    @GetMapping("/{patientId}/assign")
+    @PutMapping("/{patientId}/assign")
     ResponseEntity<String> assignPatient(@PathVariable String patientId) throws Exception {
         return new ResponseEntity<>(patientService.assignPatient(patientId),HttpStatus.OK);
     }
