@@ -9,6 +9,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 
 @RestController
@@ -47,6 +48,11 @@ public class PatientController {
         return new ResponseEntity<>(patientService.getAllPatients(),HttpStatus.OK);
     }
 
+    @GetMapping("/doctor-pair")
+    ResponseEntity<List<Map<String,String>>> getAllPatientsWithAssignedDoctor(){
+        return new ResponseEntity<>(patientService.getAllPatientsWithAssignedDoctor(),HttpStatus.OK);
+    }
+
     @PutMapping("/{userId}")
     ResponseEntity<Patient> updateUser(@PathVariable String userId, @RequestBody Patient updatedUser) throws NoSuchElementException{
         Patient patient = patientService.updatePatient(userId,updatedUser);
@@ -61,10 +67,6 @@ public class PatientController {
         return new ResponseEntity<>("Deleted",HttpStatus.OK);
     }
 
-//    @PostMapping
-//    ResponseEntity<Patient> assignPateint(@RequestBody String patientId){
-//        return new ResponseEntity<>(patientService.assignPatient(patientId),HttpStatus.CREATED);
-//    }
 
     @PutMapping("/{patientId}/assign")
     ResponseEntity<String> assignPatient(@PathVariable String patientId) throws Exception {
@@ -80,4 +82,6 @@ public class PatientController {
         }
         return new ResponseEntity<>(assign,HttpStatus.OK);
     }
+
+
 }

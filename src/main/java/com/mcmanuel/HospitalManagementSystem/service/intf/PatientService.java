@@ -3,6 +3,7 @@ package com.mcmanuel.HospitalManagementSystem.service.intf;
 import com.mcmanuel.HospitalManagementSystem.entity.Patient;
 
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 
 public interface PatientService{
@@ -14,6 +15,8 @@ public interface PatientService{
 
     List<Patient> getAllPatients();
 
+    List<Map<String,String>> getAllPatientsWithAssignedDoctor();
+
     Patient updatePatient(String userUd, Patient updatedUser) throws NoSuchElementException;
 
     void deletePatient(String userId) throws NoSuchElementException;
@@ -21,5 +24,4 @@ public interface PatientService{
     String assignPatient(String patientId) throws Exception;
 
     String unAssignPatient(String patientId) throws Exception;
-
 }

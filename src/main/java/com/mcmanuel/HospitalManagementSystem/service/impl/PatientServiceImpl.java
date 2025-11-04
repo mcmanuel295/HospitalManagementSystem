@@ -44,6 +44,26 @@ public class PatientServiceImpl implements PatientService {
         return patientRepo.findAll();
     }
 
+
+    @Override
+    public List<Map<String,String>> getAllPatientsWithAssignedDoctor() {
+        List<Map<String,String>> list=new ArrayList<>();
+
+        for(Patient patient :getAllPatients()){
+            Map<String,String> map= new HashMap<>();
+            if (patient.getAssignedDoctor() == null){
+                map.put(patient.getFullName(),"No doctor assigned");
+            }
+            else {
+                map.put(patient.getFullName(), patient.getAssignedDoctor().getFullName());
+            }
+
+            list.add(map);
+        }
+
+        return list;
+    }
+
     @Override
     public Patient updatePatient(String userUd, Patient updatedUser) throws NoSuchElementException {
         Patient patient = getPatientById(userUd);
