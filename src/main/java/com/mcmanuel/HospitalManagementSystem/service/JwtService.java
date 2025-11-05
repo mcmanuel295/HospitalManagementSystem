@@ -1,8 +1,13 @@
 package com.mcmanuel.HospitalManagementSystem.service;
 
+import com.mcmanuel.HospitalManagementSystem.pojo.LoginRequest;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import javax.crypto.KeyGenerator;
@@ -13,8 +18,10 @@ import java.util.Date;
 import java.util.function.Function;
 
 @Service
+@RequiredArgsConstructor
 public class JwtService {
     private final String key;
+    private AuthenticationManager authenticationManager;
 
     public JwtService() throws NoSuchAlgorithmException {
         KeyGenerator keyGen = KeyGenerator.getInstance("Hmac256");
@@ -56,5 +63,14 @@ public class JwtService {
 
     private Date extractDate(String jwt){
         return extractClaim(jwt,Claims::getExpiration);
+    }
+
+
+    public String login(LoginRequest loginRequest) {
+        Authentication auth =authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail(),loginRequest.getPassword()));
+        if (auth.isAuthenticated()){
+            return "successful";
+        }
+        else return "failed";
     }
 }
