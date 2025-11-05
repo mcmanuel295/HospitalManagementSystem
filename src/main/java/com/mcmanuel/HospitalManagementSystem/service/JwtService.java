@@ -3,18 +3,13 @@ package com.mcmanuel.HospitalManagementSystem.service;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
-import io.jsonwebtoken.security.SecretKeyAlgorithm;
-import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
-import javax.crypto.spec.SecretKeySpec;
-import java.security.Key;
 import java.security.NoSuchAlgorithmException;
-import java.security.spec.KeySpec;
 import java.util.Base64;
+import java.util.Date;
 import java.util.function.Function;
 
 @Service
@@ -32,6 +27,7 @@ public class JwtService {
         byte[] bytes = Base64.getDecoder().decode(key);
         return Keys.hmacShaKeyFor(bytes);
     }
+
 
 
     public String extractUsername(String jwt) {
@@ -54,6 +50,11 @@ public class JwtService {
     }
 
     public boolean validateToken(UserDetails userDetails,String token) {
-        return false;
+        return extractDate(token).after(new Date()) &&
+                (userDetails.getUsername().equals(extractUsername(token)));
+    }
+
+    private Date extractDate(String jwt){
+        return extractClaim(jwt,Claims::getExpiration);
     }
 }
