@@ -89,7 +89,7 @@ public class DoctorController {
     @GetMapping("/{doctorId}/patients")
 //    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<Patient>> getAssignedPatients(@PathVariable String doctorId) throws Exception {
-        var doctor = doctorService.getAssignedPateints(doctorId);
+        var doctor = doctorService.getAssignedPatients(doctorId);
         if (doctor == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

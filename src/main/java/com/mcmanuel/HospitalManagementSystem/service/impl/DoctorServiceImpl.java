@@ -7,6 +7,7 @@ import com.mcmanuel.HospitalManagementSystem.repository.PatientRepository;
 import com.mcmanuel.HospitalManagementSystem.service.intf.DoctorService;
 import com.mcmanuel.HospitalManagementSystem.repository.DoctorRepository;
 import com.mcmanuel.HospitalManagementSystem.request.DoctorRequest;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,21 @@ public class DoctorServiceImpl implements DoctorService{
     private final PatientRepository patientRepo;
     private final BCryptPasswordEncoder passwordEncoder;
 
+
+//    @PostConstruct
+//    private void addAdminDoctor(){
+//        Set<String> specialization =new HashSet<>();
+//        specialization.add("Nurse");
+//
+//        addDoctor(DoctorRequest.builder()
+//                .firstName("Emmanuel")
+//                .lastName("Ogbu")
+//                .email("mcmanuel755@gmail.com")
+//                .password("Oea75357@")
+//                .specialization(specialization)
+//                .contact("09081199688")
+//                .build());
+//    }
 
     @Override
     public Doctor addDoctor(DoctorRequest doctorRequest) {
@@ -88,7 +104,7 @@ public class DoctorServiceImpl implements DoctorService{
     }
 
     @Override
-    public List<Patient> getAssignedPateints(String doctorId) throws NoSuchElementException {
+    public List<Patient> getAssignedPatients(String doctorId) throws NoSuchElementException {
         Doctor doctor = doctorRepo.findById(doctorId).orElseThrow();
         return doctor.getAssignedPatients();
     }

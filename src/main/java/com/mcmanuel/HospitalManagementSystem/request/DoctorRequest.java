@@ -1,10 +1,12 @@
 package com.mcmanuel.HospitalManagementSystem.request;
 
+import lombok.Builder;
 import lombok.Data;
 
 import java.util.Set;
 
 @Data
+@Builder
 public class DoctorRequest {
 
     private String firstName;

@@ -13,13 +13,14 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.filter.OncePerRequestFilter;
-
 import java.io.IOException;
-@Configuration
+
 @RequiredArgsConstructor
+@Configuration
 public class JwtFilter extends OncePerRequestFilter {
     private final UserDetailsService userDetailsService;
     private final JwtService jwtService;
+
 
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request,@NonNull HttpServletResponse response,@NonNull FilterChain filterChain) throws ServletException, IOException {
@@ -28,6 +29,7 @@ public class JwtFilter extends OncePerRequestFilter {
         String username;
 
         if (header != null && header.startsWith("Bearer ")) {
+            System.out.println("In the inner or inside of the method");
             token = header.substring(7);
             username= jwtService.extractUsername(token);
 
@@ -38,10 +40,12 @@ public class JwtFilter extends OncePerRequestFilter {
                    UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(userDetail,null,userDetail.getAuthorities());
                    authToken.setDetails(request);
                    SecurityContextHolder.getContext().setAuthentication(authToken);
+                    System.out.println("In the last");
 
                }
             }
             filterChain.doFilter(request,response);
         }
+        filterChain.doFilter(request,response);
     }
 }

@@ -12,7 +12,7 @@ public interface DoctorService extends UserService<Doctor>{
 
     Doctor addDoctor(DoctorRequest addDoctorRequest);
     List<Doctor> getAvailableDoctors(String specialty);
-    List<Patient> getAssignedPateints(String doctorsId) throws Exception;
+    List<Patient> getAssignedPatients(String doctorsId) throws Exception;
     void unassignPatient(String doctorId,String patientId) throws NoSuchElementException;
     String updateAvailability(String doctorId);
     Set<String> getAllSpecialty();
