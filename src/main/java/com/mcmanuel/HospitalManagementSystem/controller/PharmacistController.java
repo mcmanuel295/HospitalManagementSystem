@@ -15,7 +15,7 @@ import java.util.NoSuchElementException;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/pharmacists")
+@RequestMapping("/api/v1/pharmacists")
 public class PharmacistController {
     private final PharmacistService pharmacistService;
 

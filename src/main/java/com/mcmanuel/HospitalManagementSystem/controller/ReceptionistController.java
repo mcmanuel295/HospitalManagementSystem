@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 @RestController
-@RequestMapping("api/v1/receptionists")
+@RequestMapping("/api/v1/receptionists")
 @RequiredArgsConstructor
 public class ReceptionistController {
     private final ReceptionistService receptionistService;
