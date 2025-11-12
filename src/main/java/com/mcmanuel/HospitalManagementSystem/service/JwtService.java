@@ -99,8 +99,8 @@ public class JwtService {
 
             if(authentication.isAuthenticated()) {
                 String jwt = generateToken(loginRequest.getEmail());
-                System.out.println(loginRequest.getEmail() + " jwt: " + jwt);
-                return "successful";
+                System.out.println(loginRequest.getEmail() + " jwt: " + "successful");
+                return jwt;
             } else {
                 return "error";
             }
