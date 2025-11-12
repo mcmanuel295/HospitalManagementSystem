@@ -28,12 +28,14 @@ public class JwtFilter extends OncePerRequestFilter {
         String header = request.getHeader("Authorization");
         String token;
         String username;
-        System.out.println("In the outer or outside of the method");
 
         if (header != null && header.startsWith("Bearer ")) {
-            System.out.println("In the inner or inside of the method");
+
             token = header.substring(7);
+
             username= jwtService.extractUsername(token);
+
+            System.out.println("username is "+username);
 
             if (username != null && SecurityContextHolder.getContext().getAuthentication() ==null) {
                 UserDetails userDetail = userDetailsService.loadUserByUsername(username);
