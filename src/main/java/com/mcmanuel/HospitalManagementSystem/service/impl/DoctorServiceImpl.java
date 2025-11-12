@@ -4,6 +4,7 @@ import com.mcmanuel.HospitalManagementSystem.entity.Doctor;
 import com.mcmanuel.HospitalManagementSystem.entity.Patient;
 import com.mcmanuel.HospitalManagementSystem.pojo.Role;
 import com.mcmanuel.HospitalManagementSystem.repository.PatientRepository;
+import com.mcmanuel.HospitalManagementSystem.service.intf.AdminService;
 import com.mcmanuel.HospitalManagementSystem.service.intf.DoctorService;
 import com.mcmanuel.HospitalManagementSystem.repository.DoctorRepository;
 import com.mcmanuel.HospitalManagementSystem.request.DoctorRequest;
@@ -25,6 +26,7 @@ public class DoctorServiceImpl implements DoctorService{
     private final DoctorRepository doctorRepo;
     private final PatientRepository patientRepo;
     private final BCryptPasswordEncoder passwordEncoder;
+    private final AdminService adminService;
 
 
 //    @PostConstruct
@@ -32,16 +34,15 @@ public class DoctorServiceImpl implements DoctorService{
         Set<String> specialization =new HashSet<>();
         specialization.add("Nurse");
 
-        addDoctor(
-                DoctorRequest
-                        .builder()
-                        .firstName("Emmanuel")
-                        .lastName("Ogbu")
-                        .email("mcmanuel755@gmail.com")
-                        .password("OE123")
-                        .specialization(specialization)
-                        .contact("09081199688")
-                        .build());
+        adminService.addAdminByEmail(
+                addDoctor(
+                        DoctorRequest
+                                .builder()
+
+                                .build())
+                        .getEmail()
+
+        );
     }
 
     @Override
