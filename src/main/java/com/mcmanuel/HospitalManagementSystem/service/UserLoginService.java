@@ -2,6 +2,7 @@ package com.mcmanuel.HospitalManagementSystem.service;
 
 import com.mcmanuel.HospitalManagementSystem.pojo.LoginRequest;
 import lombok.RequiredArgsConstructor;
+import org.apache.logging.slf4j.SLF4JLogger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 public class UserLoginService {
     private final ApplicationContext context;
     private final JwtService jwtService;
+    private final SLF4JLogger logger;
 
     public String login(LoginRequest loginRequest) {
         try {
@@ -22,19 +24,20 @@ public class UserLoginService {
 
             if(authentication.isAuthenticated()) {
                 String jwt = jwtService.generateToken(loginRequest.getEmail());
-                System.out.println(loginRequest.getEmail() + " jwt: " + "successful");
+                logger.info("jwt: successful: {}", loginRequest.getEmail());
                 return jwt;
-            } else {
+            }
+            else {
                 return "error";
             }
 
         }
         catch (BadCredentialsException e) {
-            System.out.println("Bad credentials for user: " + loginRequest.getEmail());
+            logger.error("Bad credentials for user:{} ",loginRequest.getEmail());
             return "error: bad credentials";
         }
         catch (Exception e) {
-            System.out.println("Login error for user: " + loginRequest.getEmail() + " - " + e.getMessage());
+            logger.error("Login error for user: {} - {}", loginRequest.getEmail(),e.getMessage());
             return "error: authentication failed";
         }
     }
