@@ -22,12 +22,26 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public String addAdmin(String userId) throws UsernameNotFoundException {
 
-        Optional<String> optionalDepartment= adminRepo.getUserDepartment(userId);
+        Optional<String> optionalDepartment = adminRepo.getUserDepartment(userId);
         if (optionalDepartment.isEmpty()) {
             throw new UsernameNotFoundException("Invalid user");
         }
-
        String name  =optionalDepartment.get().toLowerCase();
+        return switchHandle(userId,name);
+    }
+
+    @Override
+    public String addAdminByEmail(String email) throws UsernameNotFoundException {
+
+        Optional<String> optionalDepartment = adminRepo.getUserDepartmentByEmail(email);
+        if (optionalDepartment.isEmpty()) {
+            throw new UsernameNotFoundException("Invalid user");
+        }
+        String name  =optionalDepartment.get().toLowerCase();
+        return switchHandle(email,name);
+    }
+
+    private String switchHandle(String userId,String name){
 
         switch (name){
             case "doctor" :{

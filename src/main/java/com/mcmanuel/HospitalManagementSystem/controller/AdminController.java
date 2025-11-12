@@ -28,6 +28,16 @@ public class AdminController {
         return new ResponseEntity<>("Added",HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PutMapping("/{adminId}/add/email")
+    public ResponseEntity<String> addNewAdminByEmail(@PathVariable String email){
+        String admin = adminService.addAdminByEmail(email);
+        if (admin == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>("Added",HttpStatus.OK);
+    }
+
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/{adminId}/remove")

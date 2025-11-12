@@ -1,7 +1,6 @@
 package com.mcmanuel.HospitalManagementSystem.controller;
 
 import com.mcmanuel.HospitalManagementSystem.pojo.LoginRequest;
-import com.mcmanuel.HospitalManagementSystem.service.JwtService;
 import com.mcmanuel.HospitalManagementSystem.service.UserLoginService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

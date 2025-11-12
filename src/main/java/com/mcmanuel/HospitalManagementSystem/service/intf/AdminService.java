@@ -15,6 +15,8 @@ public interface AdminService {
 
     String addAdmin(String adminId);
 
+    String addAdminByEmail(String email);
+
     String removeAdmin(String adminId);
 
 //    Admin updateUser(String userId, User updatedUser) throws NoSuchElementException;
