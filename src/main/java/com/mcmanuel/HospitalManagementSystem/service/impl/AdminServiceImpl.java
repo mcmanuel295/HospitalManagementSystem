@@ -164,7 +164,7 @@ public class AdminServiceImpl implements AdminService {
             case "receptionist" -> receptionistService.deleteUser(user.getUserId());
             case "pharmacist" -> pharmacistService.getUserById(user.getUserId());
             default -> throw new UsernameNotFoundException("User not found");
-        };
+        }
     }
 
 }

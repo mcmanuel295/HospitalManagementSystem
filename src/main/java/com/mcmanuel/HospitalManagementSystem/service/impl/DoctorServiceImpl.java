@@ -4,11 +4,9 @@ import com.mcmanuel.HospitalManagementSystem.entity.Doctor;
 import com.mcmanuel.HospitalManagementSystem.entity.Patient;
 import com.mcmanuel.HospitalManagementSystem.pojo.Role;
 import com.mcmanuel.HospitalManagementSystem.repository.PatientRepository;
-import com.mcmanuel.HospitalManagementSystem.service.intf.AdminService;
 import com.mcmanuel.HospitalManagementSystem.service.intf.DoctorService;
 import com.mcmanuel.HospitalManagementSystem.repository.DoctorRepository;
 import com.mcmanuel.HospitalManagementSystem.request.DoctorRequest;
-import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -26,24 +24,7 @@ public class DoctorServiceImpl implements DoctorService{
     private final DoctorRepository doctorRepo;
     private final PatientRepository patientRepo;
     private final BCryptPasswordEncoder passwordEncoder;
-    private final AdminService adminService;
 
-
-//    @PostConstruct
-    private void addAdminDoctor(){
-        Set<String> specialization =new HashSet<>();
-        specialization.add("Nurse");
-
-        adminService.addAdminByEmail(
-                addDoctor(
-                        DoctorRequest
-                                .builder()
-
-                                .build())
-                        .getEmail()
-
-        );
-    }
 
     @Override
     public Doctor addDoctor(DoctorRequest doctorRequest) {

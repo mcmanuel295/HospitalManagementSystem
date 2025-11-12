@@ -49,11 +49,17 @@ public class AdminController {
         return new ResponseEntity<>("Added",HttpStatus.OK);
     }
 
-
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/users")
     ResponseEntity<List<User>> getAllUser(){
         return new ResponseEntity<>(adminService.getAllUser(),HttpStatus.OK);
     }
 
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<String> deleteUser(String userId) throws NoSuchElementException{
+        adminService.deleteUser(userId);
+        return new ResponseEntity<>("deleted",HttpStatus.OK);
+    }
 }

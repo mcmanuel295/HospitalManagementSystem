@@ -10,9 +10,8 @@ import java.util.Optional;
 
 public interface AdminRepository extends JpaRepository<Admin,String> {
 
-    @Query(value = "SELECT * FROM user ", nativeQuery = true)
+    @Query("SELECT u FROM User u")
     List<User> getAll();
-
 
     @Query(value = "SELECT d.department FROM User d where d.userId = :userId")
     Optional<String> getUserDepartment(String userId);

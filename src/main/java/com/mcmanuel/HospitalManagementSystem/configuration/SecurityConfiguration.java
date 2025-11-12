@@ -2,6 +2,7 @@ package com.mcmanuel.HospitalManagementSystem.configuration;
 
 import com.mcmanuel.HospitalManagementSystem.service.MyUserDetailsService;
 import lombok.RequiredArgsConstructor;
+import org.apache.logging.slf4j.SLF4JLogger;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
