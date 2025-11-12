@@ -21,9 +21,9 @@ public class UserController {
     public ResponseEntity<String> login(@RequestBody @Validated LoginRequest loginRequest){
         String login =jwtService.login(loginRequest);
 
-        if(!login.equals("successful")) {
+        if(login.equals("error")) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>("login successful", HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(login, HttpStatus.OK);
     }
 }

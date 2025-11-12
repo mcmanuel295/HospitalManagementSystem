@@ -62,7 +62,7 @@ public class DoctorController {
     }
 
     @GetMapping("/")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<List<Doctor>> getAllDoctors(){
         var doctor = doctorService.getAllUser();
         if (doctor == null) {
@@ -72,7 +72,7 @@ public class DoctorController {
     }
 
     @PutMapping("/{doctorId}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Doctor> updateDoctor(@PathVariable String doctorId,@RequestBody Doctor updatedDoctor) throws NoSuchElementException {
         var doctor = doctorService.updateUser(doctorId,updatedDoctor);
         if (doctor == null) {
@@ -91,7 +91,7 @@ public class DoctorController {
 
 
     @GetMapping("/{doctorId}/patients")
-    @PreAuthorize("hasRole('ADMIN') or hasRole('ROLE_DOCTOR')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_DOCTOR')")
     public ResponseEntity<List<Patient>> getAssignedPatients(@PathVariable String doctorId) throws Exception {
         var doctor = doctorService.getAssignedPatients(doctorId);
         if (doctor == null) {
@@ -101,7 +101,7 @@ public class DoctorController {
     }
 
 
-    @PreAuthorize("hasRole('ADMIN') or hasRole('ROLE_DOCTOR')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_DOCTOR')")
     @PutMapping("/{doctorId}/update-Availability/")
     public ResponseEntity<String> updateAvailability(@PathVariable String doctorId) throws Exception {
         var availability = doctorService.updateAvailability(doctorId);

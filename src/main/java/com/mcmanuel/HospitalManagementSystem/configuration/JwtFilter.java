@@ -25,9 +25,10 @@ public class JwtFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request,@NonNull HttpServletResponse response,@NonNull FilterChain filterChain) throws ServletException, IOException, UsernameNotFoundException {
-        String header = (String)request.getAttribute("Authorization");
+        String header = request.getHeader("Authorization");
         String token;
         String username;
+        System.out.println("In the outer or outside of the method");
 
         if (header != null && header.startsWith("Bearer ")) {
             System.out.println("In the inner or inside of the method");

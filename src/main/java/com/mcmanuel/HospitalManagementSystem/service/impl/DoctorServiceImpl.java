@@ -27,7 +27,7 @@ public class DoctorServiceImpl implements DoctorService{
     private final BCryptPasswordEncoder passwordEncoder;
 
 
-    @PostConstruct
+//    @PostConstruct
     private void addAdminDoctor(){
         Set<String> specialization =new HashSet<>();
         specialization.add("Nurse");
