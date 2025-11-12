@@ -19,13 +19,13 @@ import java.util.NoSuchElementException;
 public class ReceptionistController {
     private final ReceptionistService receptionistService;
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/")
     ResponseEntity<Receptionist> addReceptionist(@RequestBody @Validated Receptionist receptionist){
         return new ResponseEntity<>(receptionistService.addReceptionist(receptionist), HttpStatus.CREATED);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/{userId}")
     ResponseEntity<Receptionist> getUserById(@PathVariable String userId) throws NoSuchElementException{
         Receptionist receptionist = receptionistService.getUserById(userId);
@@ -35,7 +35,7 @@ public class ReceptionistController {
         return new ResponseEntity<>(receptionist,HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/email/{email}")
     ResponseEntity<Receptionist> getUserByEmail(String email) throws NoSuchElementException{
         Receptionist receptionist = receptionistService.getUserByEmail(email);
@@ -45,13 +45,13 @@ public class ReceptionistController {
         return new ResponseEntity<>(receptionist,HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/")
     ResponseEntity<List<Receptionist>> getAllUser(){
         return new ResponseEntity<>(receptionistService.getAllUser(),HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/{userId}")
     ResponseEntity<Receptionist> updateUser(String userId,Receptionist updatedUser) throws NoSuchElementException{
         Receptionist receptionist = receptionistService.updateUser(userId,updatedUser);
@@ -61,7 +61,7 @@ public class ReceptionistController {
         return new ResponseEntity<>(receptionist,HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/{usedId}")
     ResponseEntity<String> deleteUser(String userId) throws NoSuchElementException{
         receptionistService.deleteUser(userId);
