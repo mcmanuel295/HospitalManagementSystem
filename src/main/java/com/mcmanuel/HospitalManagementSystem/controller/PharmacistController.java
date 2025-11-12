@@ -20,7 +20,7 @@ public class PharmacistController {
     private final PharmacistService pharmacistService;
 
     @PostMapping("/")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Pharmacist> addPharmacist(@RequestBody @Validated PharmacistRequest request){
         var pharmacist = pharmacistService.addPharmacist(request);
         if (pharmacist == null) {
@@ -29,7 +29,7 @@ public class PharmacistController {
         return new ResponseEntity<>(pharmacist,HttpStatus.CREATED);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/{pharmacistId}")
     public ResponseEntity<Pharmacist> getPharmacistById(@PathVariable String pharmacistId) throws NoSuchElementException {
         var pharmacist = pharmacistService.getUserById(pharmacistId);
@@ -40,7 +40,7 @@ public class PharmacistController {
     }
 
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/{email}/email")
     public ResponseEntity<Pharmacist> getPharmacistByEmail(@PathVariable String email) throws NoSuchElementException {
         var doctor = pharmacistService.getUserByEmail(email);
@@ -51,7 +51,7 @@ public class PharmacistController {
     }
 
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/")
     public ResponseEntity<List<Pharmacist>> getAllPharmacists() {
         var pharmacists = pharmacistService.getAllUser();
@@ -61,7 +61,7 @@ public class PharmacistController {
         return new ResponseEntity<>(pharmacists,HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/{pharmacistId}")
     public ResponseEntity<Pharmacist> updateDoctor(@PathVariable String pharmacistId,@RequestBody Pharmacist updatedPharmacist) throws NoSuchElementException {
         var pharmacist = pharmacistService.updateUser(pharmacistId,updatedPharmacist);
@@ -72,12 +72,11 @@ public class PharmacistController {
     }
 
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/{pharmacistId}")
     public ResponseEntity<String> deletePharmacist(@PathVariable String pharmacistId) throws NoSuchElementException {
         pharmacistService.deleteUser(pharmacistId);
         return new ResponseEntity<>("Deleted",HttpStatus.OK);
     }
-
 
 }
