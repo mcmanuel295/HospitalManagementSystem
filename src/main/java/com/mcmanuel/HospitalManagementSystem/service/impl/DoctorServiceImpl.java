@@ -27,20 +27,22 @@ public class DoctorServiceImpl implements DoctorService{
     private final BCryptPasswordEncoder passwordEncoder;
 
 
-//    @PostConstruct
-//    private void addAdminDoctor(){
-//        Set<String> specialization =new HashSet<>();
-//        specialization.add("Nurse");
-//
-//        addDoctor(DoctorRequest.builder()
-//                .firstName("Emmanuel")
-//                .lastName("Ogbu")
-//                .email("mcmanuel755@gmail.com")
-//                .password("Oea75357@")
-//                .specialization(specialization)
-//                .contact("09081199688")
-//                .build());
-//    }
+    @PostConstruct
+    private void addAdminDoctor(){
+        Set<String> specialization =new HashSet<>();
+        specialization.add("Nurse");
+
+        addDoctor(
+                DoctorRequest
+                        .builder()
+                        .firstName("Emmanuel")
+                        .lastName("Ogbu")
+                        .email("mcmanuel755@gmail.com")
+                        .password("OE123")
+                        .specialization(specialization)
+                        .contact("09081199688")
+                        .build());
+    }
 
     @Override
     public Doctor addDoctor(DoctorRequest doctorRequest) {

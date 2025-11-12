@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,16 +14,18 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 @RestController
-@RequestMapping("/receptionists")
+@RequestMapping("api/v1/receptionists")
 @RequiredArgsConstructor
 public class ReceptionistController {
     private final ReceptionistService receptionistService;
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/")
     ResponseEntity<Receptionist> addReceptionist(@RequestBody @Validated Receptionist receptionist){
         return new ResponseEntity<>(receptionistService.addReceptionist(receptionist), HttpStatus.CREATED);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/{userId}")
     ResponseEntity<Receptionist> getUserById(@PathVariable String userId) throws NoSuchElementException{
         Receptionist receptionist = receptionistService.getUserById(userId);
@@ -32,6 +35,7 @@ public class ReceptionistController {
         return new ResponseEntity<>(receptionist,HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/email/{email}")
     ResponseEntity<Receptionist> getUserByEmail(String email) throws NoSuchElementException{
         Receptionist receptionist = receptionistService.getUserByEmail(email);
@@ -41,11 +45,13 @@ public class ReceptionistController {
         return new ResponseEntity<>(receptionist,HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/")
     ResponseEntity<List<Receptionist>> getAllUser(){
         return new ResponseEntity<>(receptionistService.getAllUser(),HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{userId}")
     ResponseEntity<Receptionist> updateUser(String userId,Receptionist updatedUser) throws NoSuchElementException{
         Receptionist receptionist = receptionistService.updateUser(userId,updatedUser);
@@ -55,6 +61,7 @@ public class ReceptionistController {
         return new ResponseEntity<>(receptionist,HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{usedId}")
     ResponseEntity<String> deleteUser(String userId) throws NoSuchElementException{
         receptionistService.deleteUser(userId);

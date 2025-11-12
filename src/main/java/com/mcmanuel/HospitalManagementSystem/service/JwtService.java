@@ -1,6 +1,5 @@
 package com.mcmanuel.HospitalManagementSystem.service;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.mcmanuel.HospitalManagementSystem.entity.User;
 import com.mcmanuel.HospitalManagementSystem.pojo.LoginRequest;
 import com.mcmanuel.HospitalManagementSystem.repository.UserRepository;
@@ -9,7 +8,10 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -30,7 +32,7 @@ public class JwtService {
 
     private String key="";
     private final UserRepository userRepo;
-    private final AuthenticationManager manager;
+    private final ApplicationContext context;
 
 
     @PostConstruct
@@ -39,6 +41,7 @@ public class JwtService {
         SecretKey secretKeyString = keyGen.generateKey();
         key = Base64.getEncoder().encodeToString(secretKeyString.getEncoded());
     }
+
 
     private SecretKey getKey() {
         byte[] bytes = Base64.getDecoder().decode(key);
@@ -90,17 +93,26 @@ public class JwtService {
 
 
     public String login(LoginRequest loginRequest) {
-        User user = userRepo.findByEmail(loginRequest.getEmail()).orElseThrow(()-> new UsernameNotFoundException("User with email "+loginRequest.getEmail()+" not found"));
+        try {
+            AuthenticationManager manager = context.getBean(AuthenticationManager.class);
+            Authentication authentication = manager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
 
-        Authentication authentication = manager.authenticate(new UsernamePasswordAuthenticationToken(user.getEmail(),user.getPassword()));
-        manager.authenticate(authentication);
-        System.out.println("authentication "+authentication);
+            if(authentication.isAuthenticated()) {
+                String jwt = generateToken(loginRequest.getEmail());
+                System.out.println(loginRequest.getEmail() + " jwt: " + jwt);
+                return "successful";
+            } else {
+                return "error";
+            }
 
-        if (authentication.isAuthenticated()){
-            String jwt =generateToken(loginRequest.getEmail());
-            System.out.println(loginRequest.getEmail()+" "+jwt);
-            return "successful";
         }
-        else return "failed";
+        catch (BadCredentialsException e) {
+            System.out.println("Bad credentials for user: " + loginRequest.getEmail());
+            return "error: bad credentials";
+        }
+        catch (Exception e) {
+            System.out.println("Login error for user: " + loginRequest.getEmail() + " - " + e.getMessage());
+            return "error: authentication failed";
+        }
     }
 }

@@ -7,6 +7,7 @@ import com.mcmanuel.HospitalManagementSystem.request.DoctorRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,7 +22,7 @@ public class DoctorController {
 
 
     @PostMapping("/")
-//    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Doctor> addDoctor(@RequestBody DoctorRequest request){
         var doctor = doctorService.addDoctor(request);
         if (doctor == null) {
@@ -30,6 +31,7 @@ public class DoctorController {
         return new ResponseEntity<>(doctor,HttpStatus.CREATED);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/{doctorId}")
     public ResponseEntity<Doctor> getDoctorById(@PathVariable String doctorId) throws NoSuchElementException {
         var doctor = doctorService.getUserById(doctorId);
@@ -39,6 +41,7 @@ public class DoctorController {
         return new ResponseEntity<>(doctor,HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/{email}/email")
     public ResponseEntity<Doctor> getDoctorByEmail(@PathVariable String email) throws NoSuchElementException {
         var doctor = doctorService.getUserByEmail(email);
@@ -48,6 +51,7 @@ public class DoctorController {
         return new ResponseEntity<>(doctor,HttpStatus.OK);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/available/{specialty}")
     public ResponseEntity<List<Doctor>> getAvailableDoctors(@PathVariable String specialty) throws NoSuchElementException {
         var doctor = doctorService.getAvailableDoctors(specialty);
@@ -58,7 +62,7 @@ public class DoctorController {
     }
 
     @GetMapping("/")
-//    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<Doctor>> getAllDoctors(){
         var doctor = doctorService.getAllUser();
         if (doctor == null) {
@@ -68,7 +72,7 @@ public class DoctorController {
     }
 
     @PutMapping("/{doctorId}")
-//    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Doctor> updateDoctor(@PathVariable String doctorId,@RequestBody Doctor updatedDoctor) throws NoSuchElementException {
         var doctor = doctorService.updateUser(doctorId,updatedDoctor);
         if (doctor == null) {
@@ -79,7 +83,7 @@ public class DoctorController {
 
 
     @DeleteMapping("/{doctorId}")
-//    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<String> deleteDoctor(@PathVariable String doctorId) throws NoSuchElementException {
         doctorService.deleteUser(doctorId);
         return new ResponseEntity<>("Deleted",HttpStatus.OK);
@@ -87,7 +91,7 @@ public class DoctorController {
 
 
     @GetMapping("/{doctorId}/patients")
-//    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('DOCTOR')")
     public ResponseEntity<List<Patient>> getAssignedPatients(@PathVariable String doctorId) throws Exception {
         var doctor = doctorService.getAssignedPatients(doctorId);
         if (doctor == null) {
@@ -96,6 +100,8 @@ public class DoctorController {
         return new ResponseEntity<>(doctor,HttpStatus.OK);
     }
 
+
+    @PreAuthorize("hasRole('ADMIN') or hasRole('DOCTOR')")
     @PutMapping("/{doctorId}/update-Availability/")
     public ResponseEntity<String> updateAvailability(@PathVariable String doctorId) throws Exception {
         var availability = doctorService.updateAvailability(doctorId);
@@ -114,6 +120,7 @@ public class DoctorController {
 //        return new ResponseEntity<>(assign,HttpStatus.OK);
 //    }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/allSpecialization")
     public ResponseEntity<Set<String>> getAllSpecialty(){
         return new ResponseEntity<>(doctorService.getAllSpecialty(),HttpStatus.OK);

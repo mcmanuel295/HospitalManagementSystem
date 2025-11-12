@@ -6,6 +6,7 @@ import com.mcmanuel.HospitalManagementSystem.service.intf.PharmacistService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +20,7 @@ public class PharmacistController {
     private final PharmacistService pharmacistService;
 
     @PostMapping("/")
-//    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Pharmacist> addPharmacist(@RequestBody @Validated PharmacistRequest request){
         var pharmacist = pharmacistService.addPharmacist(request);
         if (pharmacist == null) {
@@ -28,7 +29,7 @@ public class PharmacistController {
         return new ResponseEntity<>(pharmacist,HttpStatus.CREATED);
     }
 
-//    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/{pharmacistId}")
     public ResponseEntity<Pharmacist> getPharmacistById(@PathVariable String pharmacistId) throws NoSuchElementException {
         var pharmacist = pharmacistService.getUserById(pharmacistId);
@@ -39,7 +40,7 @@ public class PharmacistController {
     }
 
 
-//    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/{email}/email")
     public ResponseEntity<Pharmacist> getPharmacistByEmail(@PathVariable String email) throws NoSuchElementException {
         var doctor = pharmacistService.getUserByEmail(email);
@@ -50,19 +51,18 @@ public class PharmacistController {
     }
 
 
-//    @PreAuthorize("hasRole('ADMIN')")
-@GetMapping("/")
-public ResponseEntity<List<Pharmacist>> getAllPharmacists() {
-    var pharmacists = pharmacistService.getAllUser();
-    if (pharmacists == null) {
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-    }
-    return new ResponseEntity<>(pharmacists,HttpStatus.OK);
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/")
+    public ResponseEntity<List<Pharmacist>> getAllPharmacists() {
+        var pharmacists = pharmacistService.getAllUser();
+        if (pharmacists == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(pharmacists,HttpStatus.OK);
     }
 
-//    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{pharmacistId}")
-//    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Pharmacist> updateDoctor(@PathVariable String pharmacistId,@RequestBody Pharmacist updatedPharmacist) throws NoSuchElementException {
         var pharmacist = pharmacistService.updateUser(pharmacistId,updatedPharmacist);
         if (pharmacist == null) {
@@ -72,7 +72,7 @@ public ResponseEntity<List<Pharmacist>> getAllPharmacists() {
     }
 
 
-//    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{pharmacistId}")
     public ResponseEntity<String> deletePharmacist(@PathVariable String pharmacistId) throws NoSuchElementException {
         pharmacistService.deleteUser(pharmacistId);

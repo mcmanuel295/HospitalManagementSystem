@@ -13,17 +13,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/users")
+@RequestMapping("/api/v1/users")
 public class UserController {
     private final JwtService jwtService;
 
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody @Validated LoginRequest loginRequest){
+        String login =jwtService.login(loginRequest);
 
-        if(!jwtService.login(loginRequest).equals("successful")){
+        if(!login.equals("successful")) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-            return new ResponseEntity<>("login successful",HttpStatus.BAD_REQUEST);
-
+        return new ResponseEntity<>("login successful", HttpStatus.BAD_REQUEST);
     }
 }

@@ -20,19 +20,19 @@ public class MedicineController {
     private final MedicineService medicineService;
 
     @PostMapping("/")
-//    @PreAuthorize("hasRole('ROLE_PHARMACIST') or hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_PHARMACIST') or hasRole('ROLE_ADMIN')")
     public ResponseEntity<Medicine> addMedicine(@RequestBody @Validated Medicine medicine){
         return new ResponseEntity<>(medicineService.addMedicine(medicine), HttpStatus.CREATED);
     }
 
     @GetMapping("/")
-//    @PreAuthorize("hasRole('ROLE_PHARMACIST') or hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_PHARMACIST') or hasRole('ROLE_ADMIN')")
     public ResponseEntity<List<Medicine>> getAllMedicine(){
         return new ResponseEntity<>(medicineService.getAllMedicines(), HttpStatus.CREATED);
     }
 
     @GetMapping("/{medicineId}")
-//    @PreAuthorize("hasRole('ROLE_PHARMACIST') or hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_PHARMACIST') or hasRole('ROLE_ADMIN')")
     public ResponseEntity<Medicine> getMedicine(@PathVariable String medicineId){
         Medicine medicine = medicineService.getMedicine(medicineId);
         if (medicine == null) {
@@ -54,7 +54,7 @@ public class MedicineController {
 
 
     @DeleteMapping("/{medicineId}")
-//    @PreAuthorize("hasRole('ROLE_PHARMACIST') or hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_PHARMACIST') or hasRole('ROLE_ADMIN')")
     public ResponseEntity<String> deleteMedicine(@PathVariable String medicineId){
         medicineService.deleteMedicine(medicineId);
 
@@ -63,7 +63,7 @@ public class MedicineController {
 
 
     @GetMapping("/{medicineId}/name")
-//    @PreAuthorize("hasRole('ROLE_PHARMACIST') or hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_PHARMACIST') or hasRole('ROLE_ADMIN')")
     public ResponseEntity<String> getMedicineName(@PathVariable String medicineId){
         String name = medicineService.getMedicineName(medicineId);
         if (name == null) {
@@ -74,7 +74,7 @@ public class MedicineController {
 
 
     @PutMapping("/{medicineId}/remove")
-//    @PreAuthorize("hasRole('ROLE_PHARMACIST') or hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_PHARMACIST') or hasRole('ROLE_ADMIN')")
     public ResponseEntity<String> removeMedicine(@PathVariable String medicineId) throws LimitExceededException {
         Medicine medicine = medicineService.removeMedicine(medicineId);
         if (medicine == null) {
@@ -86,7 +86,7 @@ public class MedicineController {
 
 
     @GetMapping("/{medicineId}/distributors")
-//    @PreAuthorize("hasRole('ROLE_PHARMACIST') or hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_PHARMACIST') or hasRole('ROLE_ADMIN')")
     public ResponseEntity<Set<String>> getDistributor(@PathVariable String medicineId){
 
         Set<String> distributors =medicineService.getDistributor(medicineId);
@@ -97,7 +97,7 @@ public class MedicineController {
     }
 
     @GetMapping("/distributors")
-//    @PreAuthorize("hasRole('ROLE_PHARMACIST') or hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_PHARMACIST') or hasRole('ROLE_ADMIN')")
     public ResponseEntity<Set<String>> getDistributorAllName(){
         Set<String> medicine = medicineService.getDistributorAll();
         if (medicine.isEmpty()) {
