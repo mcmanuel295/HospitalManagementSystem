@@ -1,20 +1,14 @@
 package com.mcmanuel.HospitalManagementSystem.service;
 
-import com.mcmanuel.HospitalManagementSystem.repository.UserRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.ApplicationContext;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
-import java.security.NoSuchAlgorithmException;
-import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -23,15 +17,9 @@ import java.util.function.Function;
 @Service
 public class JwtService {
 
-//    @Value("${jwt.secret.key}")
-    private final String key ;
+    @Value("${jwt.secret.key}")
+    private String key ;
 
-    public JwtService() throws NoSuchAlgorithmException {
-        KeyGenerator keyGen = KeyGenerator.getInstance("HmacSHA256");
-        SecretKey secretKeyString = keyGen.generateKey();
-        key = Base64.getEncoder().encodeToString(secretKeyString.getEncoded());
-
-    }
 
     private SecretKey getKey() {
         byte[] bytes = Decoders.BASE64.decode(key);
@@ -72,9 +60,13 @@ public class JwtService {
                 .getPayload();
     }
 
-    public boolean validateToken(UserDetails userDetails,String token) {
-        return extractDate(token).after(new Date()) &&
-                (userDetails.getUsername().equals(extractUsername(token)));
+    public boolean validateToken(UserDetails userDetails, String token) {
+        final String username = extractUsername(token);
+        return username.equals(userDetails.getUsername()) && !isTokenExpired(token);
+    }
+
+    private boolean isTokenExpired(String token) {
+        return extractDate(token).before(new Date());
     }
 
     private Date extractDate(String jwt){
