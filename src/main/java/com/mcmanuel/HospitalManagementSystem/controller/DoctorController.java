@@ -112,7 +112,7 @@ public class DoctorController {
     }
 
 //    @PutMapping("/{doctorId}/unassign/{patientId}")
-//    public ResponseEntity<String> unassignPateint(@PathVariable @Validated String doctorId,@PathVariable @Validated String patientId){
+//    public ResponseEntity<String> unassignPatient(@PathVariable @Validated String doctorId,@PathVariable @Validated String patientId){
 //        String assign =doctorService.unassignPatient(doctorId,patientId);
 //        if (assign == null) {
 //            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
