@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#f5f8f4">
+    <meta name="description" content="Nurture health management platform for patients and care teams.">
+    <title>Nurture | Hospital care, in sync</title>
+    <link rel="stylesheet" href="./css/home.css">
+</head>
+<body>
+<div class="page-shell">
+    <header class="site-header">
+        <div class="container nav">
+            <a class="brand" href="/" aria-label="Nurture home"><span class="brand-mark">+</span>nurture</a>
+            <nav class="nav-links" aria-label="Main navigation">
+                <a href="#services">Care network</a>
+                <a href="#how-it-works">How it works</a>
+                <a href="#contact">Contact</a>
+            </nav>
+            <div class="nav-actions">
+                <button class="text-button" data-open-login>Sign in</button>
+                <button class="outline-button" data-open-login>Open workspace</button>
+                <button class="menu-toggle" aria-label="Toggle navigation" aria-expanded="false">&#9776;</button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container hero-grid">
+                <div class="reveal">
+                    <span class="eyebrow">A calmer way to care</span>
+                    <h1>Care that moves with you.</h1>
+                    <p class="hero-copy">Nurture brings patients, doctors, pharmacists, and administrators into one clear rhythm, so every next step is easier to see.</p>
+                    <div class="hero-actions">
+                        <button class="primary-button" data-open-login>Enter your care space <span aria-hidden="true">&rarr;</span></button>
+                        <a class="outline-button" href="#services">Explore the network</a>
+                    </div>
+                    <div class="hero-note"><span class="note-dot"></span> Built for the people behind every recovery</div>
+                </div>
+                <div class="dashboard-wrap reveal reveal-delay" aria-label="Care workspace preview">
+                    <div class="dashboard">
+                        <div class="dash-top"><div><small>Good morning, Amara</small><h3>Your care overview</h3></div><div class="avatar">AM</div></div>
+                        <div class="dash-banner"><div><strong>One less thing to carry</strong><span>Your team has the latest update.</span></div><div class="banner-icon">&#10003;</div></div>
+                        <div class="dash-body">
+                            <div class="panel"><div class="panel-heading">Upcoming care <a href="#services">VIEW ALL</a></div>
+                                <div class="appointment"><div class="date">18<br>JUN</div><div><strong>Dr. Nia Okafor</strong><span>General consultation &middot; 10:30 AM</span></div><div class="status">CONFIRMED</div></div>
+                                <div class="appointment"><div class="date">24<br>JUN</div><div><strong>Prescription review</strong><span>Pharmacy desk &middot; 2:00 PM</span></div></div>
+                            </div>
+                            <div class="panel"><div class="panel-heading">At a glance</div>
+                                <div class="metric"><div class="metric-icon">&#43;</div><div><strong>04</strong><span>Active records</span></div></div>
+                                <div class="metric"><div class="metric-icon">&#10003;</div><div><strong>92%</strong><span>Care progress</span></div></div>
+                                <div class="metric"><div class="metric-icon">&#9679;</div><div><strong>02</strong><span>New updates</span></div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="container trust" id="how-it-works">
+            <span class="trust-label">One system. Every role in sync.</span>
+            <div class="trust-roles"><span class="role-chip">Patients</span><span class="role-chip">Doctors</span><span class="role-chip">Pharmacy</span><span class="role-chip">Admin</span></div>
+        </section>
+
+        <section class="services" id="services">
+            <div class="container">
+                <div class="section-head"><h2>The right detail, right when it matters.</h2><p>A shared foundation for the everyday moments that make care feel considered, connected, and human.</p></div>
+                <div class="service-grid">
+                    <article class="service-card"><span class="service-number">01 / PATIENTS</span><h3>Stay close to your care.</h3><p>Keep your personal details, assigned doctor, health concerns, and next appointments together in one accessible place.</p></article>
+                    <article class="service-card"><span class="service-number">02 / CARE TEAMS</span><h3>See the whole picture.</h3><p>Doctors can manage availability and assigned patients while reception teams keep the day moving smoothly.</p></article>
+                    <article class="service-card"><span class="service-number">03 / OPERATIONS</span><h3>Make every resource count.</h3><p>Administrators and pharmacists have the tools to manage people, medicines, distributors, and the details in between.</p></article>
+                </div>
+            </div>
+        </section>
+
+        <section class="container cta" id="contact">
+            <div class="cta-inner"><h2>Your next step starts with a clearer view.</h2><button class="primary-button" data-open-login>Open your workspace <span aria-hidden="true">&rarr;</span></button></div>
+        </section>
+    </main>
+
+    <footer class="site-footer"><div class="container footer-inner"><span>&copy; <span id="year"></span> Nurture Health Systems</span><span>Designed for better handoffs and brighter outcomes.</span></div></footer>
+</div>
+
+<div class="modal-backdrop" id="login-modal" aria-hidden="true">
+    <section class="modal" role="dialog" aria-modal="true" aria-labelledby="login-title">
+        <button class="close-modal" data-close-login aria-label="Close sign in dialog">&times;</button>
+        <h2 id="login-title">Welcome back.</h2><p>Sign in to continue to your Nurture care workspace.</p>
+        <form class="login-form" id="login-form"><label for="email">Email address</label><input id="email" name="email" type="email" autocomplete="email" required placeholder="you@example.com"><label for="password">Password</label><input id="password" name="password" type="password" autocomplete="current-password" required placeholder="Your password"><button class="primary-button" type="submit">Continue to workspace</button><div class="form-message" id="form-message" role="status"></div></form>
+    </section>
+</div>
+<script src="/js/home.js"></script>
+</body>
+</html>
