@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Management System</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-box">
+            <div class="login-header">
+                <h1>Nurture Hospital</h1>
+                <p>Management System</p>
+            </div>
+            <form id="loginForm" class="login-form">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+            </form>
+            <div id="loginError" class="alert alert-error" style="display: none;"></div>
+        </div>
+        <div class="login-info">
+            <h2>Welcome</h2>
+            <p>Hospital Management System</p>
+            <ul class="features-list">
+                <li>✓ Secure Authentication</li>
+                <li>✓ Patient Management</li>
+                <li>✓ Doctor Scheduling</li>
+                <li>✓ Appointment Booking</li>
+                <li>✓ Pharmacy Integration</li>
+                <li>✓ Real-time Notifications</li>
+            </ul>
+        </div>
+    </div>
+    <div id="loadingSpinner" class="loading-spinner" style="display: none;">
+        <div class="spinner"></div>
+    </div>
+    <script src="js/config.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/auth.js"></script>
+</body>
+</html>

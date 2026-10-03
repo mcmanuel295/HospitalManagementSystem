@@ -1,0 +1,13 @@
+@media (max-width: 768px) {
+    .login-container {
+        grid-template-columns: 1fr;
+    }
+
+    .login-info {
+        display: none;
+    }
+
+    .login-box {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+}
