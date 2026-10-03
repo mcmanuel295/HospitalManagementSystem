@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Pharmacy - Hospital Management</title>
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="brand"><h2>Nurture</h2></div>
+      <nav>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="patients.html">Patients</a>
+        <a href="doctors.html">Doctors</a>
+        <a href="appointments.html">Appointments</a>
+        <a class="active" href="pharmacy.html">Pharmacy</a>
+      </nav>
+      <a href="#" class="logout" onclick="logout()">Logout</a>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <h1>Pharmacy Management</h1>
+        <button class="btn-primary">Add Medicine</button>
+      </header>
+
+      <section class="panel">
+        <table>
+          <thead>
+            <tr>
+              <th>Medicine</th>
+              <th>Dosage</th>
+              <th>Stock</th>
+              <th>Price</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Aspirin</td>
+              <td>500mg</td>
+              <td>250</td>
+              <td>$2.50</td>
+              <td><span class="badge confirmed">In Stock</span></td>
+            </tr>
+            <tr>
+              <td>Amoxicillin</td>
+              <td>250mg</td>
+              <td>120</td>
+              <td>$5.00</td>
+              <td><span class="badge pending">Low Stock</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </main>
+  </div>
+  <script src="../js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Patients - Hospital Management</title>
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="brand"><h2>Nurture</h2></div>
+      <nav>
+        <a href="dashboard.html">Dashboard</a>
+        <a class="active" href="patients.html">Patients</a>
+        <a href="doctors.html">Doctors</a>
+        <a href="appointments.html">Appointments</a>
+        <a href="pharmacy.html">Pharmacy</a>
+      </nav>
+      <a href="#" class="logout" onclick="logout()">Logout</a>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <h1>Patient Management</h1>
+        <button class="btn-primary">Add New Patient</button>
+      </header>
+
+      <section class="panel">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Age</th>
+              <th>Contact</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>P001</td>
+              <td>John Doe</td>
+              <td>35</td>
+              <td>555-0101</td>
+              <td><span class="badge confirmed">Active</span></td>
+            </tr>
+            <tr>
+              <td>P002</td>
+              <td>Jane Smith</td>
+              <td>28</td>
+              <td>555-0102</td>
+              <td><span class="badge confirmed">Active</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </main>
+  </div>
+  <script src="../js/app.js"></script>
+</body>
+</html>
